@@ -145,7 +145,28 @@ namespace CourseSystemBackEnd.Controllers
             {
                 return NotFound("Course not found.");
             }
+
+            if (_teacherRepository.IsTeacherAssignedToCourseAsync(teacherId, courseId).Result)
+            {
+                return BadRequest("Teacher is already assigned to the course.");
+            }
             // Assuming you have a method in the repository to assign a course to a teacher
+            var result = await _teacherRepository.AssignCourseToTeacherAsync(teacherId, courseId);
+            if (!result)
+            {
+                return NotFound("Teacher or Course not found.");
+            }
+            return Ok(new { message = "Course assigned to teacher successfully." });
+        }
+
+        [HttpPut("AssignCourseToTeacherAsync,{teacherId},{courseId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> AssignCourseToTeacherAsync(Guid teacherId, Guid courseId)
+        {
             var result = await _teacherRepository.AssignCourseToTeacherAsync(teacherId, courseId);
             if (!result)
             {

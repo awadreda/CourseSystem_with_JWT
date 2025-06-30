@@ -38,7 +38,7 @@ public static class CourseMapper
             Description = course.Description,
             Credits = course.Credits,
             TeacherID = course.TeacherID,
-            Students = course.Students.ToList(),
+            // Students = course.Students.ToList(),
         };
     }
 
@@ -50,6 +50,19 @@ public static class CourseMapper
             Description = courseCreateDto.Description,
             Credits = courseCreateDto.Credits,
             TeacherID = courseCreateDto.TeacherID,
+        };
+    }
+
+    public static Course ToCourseFromUpdateDTO(this CourseUpdateDTO courseUpdateDto)
+    {
+        return new Course
+        {
+            CourseID = courseUpdateDto.CourseID,
+            Title = courseUpdateDto.Title,
+            Description = courseUpdateDto.Description,
+            Credits = courseUpdateDto.Credits,
+            TeacherID = courseUpdateDto.TeacherID,
+            // Students = courseUpdateDto.Students,
         };
     }
 }

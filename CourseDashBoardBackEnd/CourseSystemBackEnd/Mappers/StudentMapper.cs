@@ -1,8 +1,11 @@
 namespace CourseSystemBackEnd.Mappers;
 
+using System.Threading.Tasks;
 using CourseSystemBackEnd.DTOs;
 using CourseSystemBackEnd.DTOs.StudentDTOs;
+using CourseSystemBackEnd.Interfaces;
 using CourseSystemBackEnd.Models;
+using CourseSystemBackEnd.Repository;
 
 public static class StudentMapper
 {
@@ -15,6 +18,7 @@ public static class StudentMapper
             LastName = student.User.LastName,
             GPA = student.GPA,
             Email = student.User.Email,
+            Role = student.User.Role,
 
             Courses = student.Courses.Select(c => c.CourseID).ToList(),
         };
@@ -40,16 +44,32 @@ public static class StudentMapper
         };
     }
 
-    public static Student ToStudentFromCreateDTO(this StudentCreateDto studentCreateDto)
+    public static async Task<Student> ToStudentFromCreateDTO(
+        this StudentCreateDto studentCreateDto,
+        ICourseRepository _courseRerepository
+    )
     {
-        return new Student
+        var student = new Student
         {
             GPA = studentCreateDto.GPA,
             User = studentCreateDto.User.toUserFromCreateDTO(),
-            Courses =
-                studentCreateDto.Courses?.Select(c => new Course { CourseID = c }).ToList()
-                ?? new List<Course>(),
+            Courses = new List<Course>(),
         };
+
+        if (studentCreateDto.Courses != null)
+        {
+            foreach (var CourseID in studentCreateDto.Courses)
+            {
+                var course = await _courseRerepository.GetCourseByIdAsync(CourseID);
+
+                if (course != null)
+                {
+                    student.Courses.Add(course);
+                }
+            }
+        }
+
+        return student;
     }
 
     public static Student ToStudentFromUpdateDTO(this StudentUpdateDto studentUpdateDto)

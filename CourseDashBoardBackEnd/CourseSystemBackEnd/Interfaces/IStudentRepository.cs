@@ -10,8 +10,8 @@ namespace CourseSystemBackEnd.Interfaces
         Task<List<Student>> GetAllStudentsAsync();
         Task<Student> GetStudentByIdAsync(Guid studentId);
         Task<Student> GetStudentByEmailAsync(string email);
-        Task<bool> AddStudentAsync(Student student);
-        Task<bool> UpdateStudentAsync(Student student);
+        Task<Student> AddStudentAsync(Student student);
+        Task<Student> UpdateStudentAsync(Student student);
         Task<bool> DeleteStudentAsync(Guid studentId);
     }
 }

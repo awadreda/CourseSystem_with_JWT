@@ -51,5 +51,5 @@ public record CourseUpdateDTO
 
     [Required]
     public Guid TeacherID { get; init; }
-    public ICollection<Student> Students { get; init; } = new List<Student>();
+    // public ICollection<Student>? Students { get; init; }
 }

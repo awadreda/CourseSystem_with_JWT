@@ -9,7 +9,7 @@ public interface ICourseRepository
     Task<Course> GetCourseByIdAsync(Guid courseId);
     Task<List<Course>> GetCoursesByInstructorIdAsync(Guid instructorId);
     Task<Course> AddCourseAsync(Course course);
-    Task<bool> UpdateCourseAsync(Course course);
+    Task<Course> UpdateCourseAsync(Course course);
     Task<bool> DeleteCourseAsync(Guid courseId);
     Task<bool> EnrollStudentInCourseAsync(Guid courseId, Guid studentId);
     Task<bool> UnenrollStudentFromCourseAsync(Guid courseId, Guid studentId);

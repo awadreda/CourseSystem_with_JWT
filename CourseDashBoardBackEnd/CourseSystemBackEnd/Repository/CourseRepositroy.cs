@@ -54,8 +54,8 @@ public class CourseRepository : ICourseRepository
             return false;
         }
         courseToEnroll.Students.Add(student);
-        // _schoolDB.Courses.Update(courseToEnroll);
-        // await _schoolDB.SaveChangesAsync();
+        _schoolDB.Courses.Update(courseToEnroll);
+        await _schoolDB.SaveChangesAsync();
         return true;
     }
 
@@ -101,34 +101,34 @@ public class CourseRepository : ICourseRepository
             return false;
         }
         courseToUnEnroll.Students.Remove(student);
-        // _schoolDB.Courses.Update(courseToUnEnroll);
-        // await _schoolDB.SaveChangesAsync();
+        _schoolDB.Courses.Update(courseToUnEnroll);
+        await _schoolDB.SaveChangesAsync();
         return true;
     }
 
-    public async Task<bool> UpdateCourseAsync(Course course)
+    public async Task<Course> UpdateCourseAsync(Course course)
     {
         if (course == null || course.CourseID == Guid.Empty)
         {
-            return false;
+            return null;
         }
 
-        var existingCourse = await _schoolDB.Courses.FirstOrDefaultAsync(c =>
-            c.CourseID == course.CourseID
-        );
+        var existingCourse = await _schoolDB
+            .Courses.Include(c => c.Students)
+            .FirstOrDefaultAsync(c => c.CourseID == course.CourseID);
 
         if (existingCourse == null)
         {
-            return false;
+            return null;
         }
 
         existingCourse.Title = course.Title;
         existingCourse.Description = course.Description;
         existingCourse.Credits = course.Credits;
         existingCourse.TeacherID = course.TeacherID;
-        existingCourse.Students = course.Students;
+        // existingCourse.Students = course.Students;
         // _schoolDB.Courses.Update(existingCourse);
         // await _schoolDB.SaveChangesAsync();
-        return true;
+        return existingCourse;
     }
 }
