@@ -14,7 +14,7 @@ public static class CourseMapper
             Description = course.Description,
             Credits = course.Credits,
             Students = course.Students.ToList(),
-            TeacherID = course.TeacherID,
+            TeacherID = (Guid)course.TeacherID,
         };
     }
 
@@ -25,7 +25,7 @@ public static class CourseMapper
             Title = course.Title,
             Description = course.Description,
             Credits = course.Credits,
-            TeacherID = course.TeacherID,
+            TeacherID = (Guid)course.TeacherID,
         };
     }
 
@@ -37,7 +37,7 @@ public static class CourseMapper
             Title = course.Title,
             Description = course.Description,
             Credits = course.Credits,
-            TeacherID = course.TeacherID,
+            TeacherID = (Guid)course.TeacherID,
             // Students = course.Students.ToList(),
         };
     }

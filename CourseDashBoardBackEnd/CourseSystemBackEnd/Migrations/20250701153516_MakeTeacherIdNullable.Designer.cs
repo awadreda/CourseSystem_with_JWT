@@ -4,6 +4,7 @@ using CourseSystemBackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseSystemBackEnd.Migrations
 {
     [DbContext(typeof(SchoolDBContext))]
-    partial class SchoolDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250701153516_MakeTeacherIdNullable")]
+    partial class MakeTeacherIdNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

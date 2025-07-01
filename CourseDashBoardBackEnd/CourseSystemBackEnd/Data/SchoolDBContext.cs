@@ -43,12 +43,19 @@ public class SchoolDBContext : DbContext
                     j.HasOne<Student>()
                         .WithMany()
                         .HasForeignKey("StudentsStudentID")
-                        .OnDelete(DeleteBehavior.NoAction), // ✅ منع الكاسكيد
+                        .OnDelete(DeleteBehavior.NoAction),
                 j =>
                     j.HasOne<Course>()
                         .WithMany()
                         .HasForeignKey("CoursesCourseID")
                         .OnDelete(DeleteBehavior.NoAction)
             );
+
+        builder
+            .Entity<Course>()
+            .HasOne(c => c.Teacher)
+            .WithMany(t => t.Courses)
+            .HasForeignKey(c => c.TeacherID)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

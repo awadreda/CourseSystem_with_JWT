@@ -87,9 +87,9 @@ namespace CourseSystemBackEnd.Controllers
                 return NotFound("Course not found.");
             }
 
-            if (_teacherRepository.IsTeacherAssignedToCourseAsync(teacherId, courseId).Result)
+            if (!_teacherRepository.IsTeacherAssignedToCourseAsync(teacherId, courseId).Result)
             {
-                return BadRequest("Teacher is already assigned to the course.");
+                return BadRequest("Teacher is not assigned to the course.");
             }
             // Assuming you have a method in the repository to assign a course to a teacher
             var result = await _teacherRepository.UnassignCourseFromTeacherAsync(
