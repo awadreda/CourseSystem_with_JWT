@@ -111,7 +111,7 @@ namespace CourseSystemBackEnd.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> EnrollStudentInCourseAsync(Guid studentId, Guid courseId)
         {
-            var student = await _courseRepository.GetCourseByIdAsync(studentId);
+            var student = await _studentRepository.GetStudentByIdAsync(studentId);
             if (student == null)
             {
                 return NotFound("Student not found.");
@@ -132,7 +132,7 @@ namespace CourseSystemBackEnd.Controllers
             }
 
             // Assuming you have a method in the repository to assign a course to a student
-            var result = await _courseRepository.EnrollStudentInCourseAsync(studentId, courseId);
+            var result = await _courseRepository.EnrollStudentInCourseAsync(courseId, studentId);
             if (!result)
             {
                 return BadRequest("Failed to enroll student in course.");
@@ -148,7 +148,7 @@ namespace CourseSystemBackEnd.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UnenrollStudentInCourseAsync(Guid studentId, Guid courseId)
         {
-            var student = await _courseRepository.GetCourseByIdAsync(studentId);
+            var student = await _studentRepository.GetStudentByIdAsync(studentId);
             if (student == null)
             {
                 return NotFound("Student not found.");
@@ -170,8 +170,8 @@ namespace CourseSystemBackEnd.Controllers
 
             // Assuming you have a method in the repository to assign a course to a student
             var result = await _courseRepository.UnenrollStudentFromCourseAsync(
-                studentId,
-                courseId
+                courseId,
+                studentId
             );
             if (!result)
             {

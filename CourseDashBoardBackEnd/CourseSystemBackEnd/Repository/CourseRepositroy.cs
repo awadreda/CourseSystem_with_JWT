@@ -1,6 +1,7 @@
 using CourseSystemBackEnd.Data;
 using CourseSystemBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace CourseSystemBackEnd.Interfaces;
 
@@ -34,27 +35,6 @@ public class CourseRepository : ICourseRepository
         }
 
         _schoolDB.Courses.Remove(course);
-        await _schoolDB.SaveChangesAsync();
-        return true;
-    }
-
-    public async Task<bool> EnrollStudentInCourseAsync(Guid courseId, Guid studentId)
-    {
-        var courseToEnroll = await _schoolDB
-            .Courses.Include(c => c.Students)
-            .FirstOrDefaultAsync(c => c.CourseID == courseId);
-
-        if (courseToEnroll == null)
-        {
-            return false;
-        }
-        var student = await _schoolDB.Students.FirstOrDefaultAsync(s => s.StudentID == studentId);
-        if (student == null)
-        {
-            return false;
-        }
-        courseToEnroll.Students.Add(student);
-        _schoolDB.Courses.Update(courseToEnroll);
         await _schoolDB.SaveChangesAsync();
         return true;
     }
@@ -105,27 +85,86 @@ public class CourseRepository : ICourseRepository
         return await _schoolDB.Courses.AnyAsync(c => c.CourseID == courseId);
     }
 
-    public async Task<bool> UnenrollStudentFromCourseAsync(Guid courseId, Guid studentId)
+    public async Task<bool> EnrollStudentInCourseAsync(Guid courseId, Guid studentId)
     {
-        var courseToUnEnroll = await _schoolDB
+        var courseToEnroll = await _schoolDB
             .Courses.Include(c => c.Students)
             .FirstOrDefaultAsync(c => c.CourseID == courseId);
-        if (courseToUnEnroll == null)
+
+        if (courseToEnroll == null)
         {
             return false;
         }
-
-        var student = await _schoolDB.Students.FirstOrDefaultAsync(s => s.StudentID == studentId);
+        var student = await _schoolDB
+            .Students.Include(s => s.Courses)
+            .FirstOrDefaultAsync(s => s.StudentID == studentId);
         if (student == null)
         {
             return false;
         }
-        if (!courseToUnEnroll.Students.Contains(student))
-        {
+
+        if (courseToEnroll.Students.Any(s => s.StudentID == studentId))
             return false;
-        }
-        courseToUnEnroll.Students.Remove(student);
-        _schoolDB.Courses.Update(courseToUnEnroll);
+
+        courseToEnroll.Students.Add(student);
+        _schoolDB.Courses.Update(courseToEnroll);
+        await _schoolDB.SaveChangesAsync();
+        return true;
+    }
+
+    // public async Task<bool> UnenrollStudentFromCourseAsync(Guid courseId, Guid studentId)
+    // {
+    //     var courseToUnEnroll = await _schoolDB
+    //         .Courses.Include(c => c.Students)
+    //         .FirstOrDefaultAsync(c => c.CourseID == courseId);
+    //     if (courseToUnEnroll == null)
+    //     {
+    //         return false;
+    //     }
+
+    //     var student = courseToUnEnroll.Students.FirstOrDefault(s => s.StudentID == studentId);
+    //     if (student == null)
+    //     {
+    //         return false;
+    //     }
+
+    //     courseToUnEnroll.Students.Remove(student);
+    //     _schoolDB.Courses.Update(courseToUnEnroll);
+    //     await _schoolDB.SaveChangesAsync();
+    //     return true;
+    // }
+
+    // public async Task<bool> EnrollStudentInCourseAsync(Guid courseId, Guid studentId)
+    // {
+    //     var student = await _schoolDB
+    //         .Students.Include(s => s.Courses)
+    //         .FirstOrDefaultAsync(s => s.StudentID == studentId);
+    //     if (student == null)
+    //         return false;
+
+    //     var course = student.Courses.FirstOrDefault(c => c.CourseID == courseId);
+    //     if (course != null)
+    //         return false;
+
+    //     student.Courses.Add(course);
+    //     await _schoolDB.SaveChangesAsync();
+    //     return true;
+    // }
+
+    //================FROM CHAT GPT         ==================
+    public async Task<bool> UnenrollStudentFromCourseAsync(Guid courseId, Guid studentId)
+    {
+        var student = await _schoolDB
+            .Students.Include(s => s.Courses)
+            .FirstOrDefaultAsync(s => s.StudentID == studentId);
+        if (student == null)
+            return false;
+
+        var course = student.Courses.FirstOrDefault(c => c.CourseID == courseId);
+        if (course == null)
+            return false;
+
+        student.Courses.Remove(course);
         await _schoolDB.SaveChangesAsync();
         return true;
     }

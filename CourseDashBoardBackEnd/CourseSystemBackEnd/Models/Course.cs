@@ -18,7 +18,7 @@ public class Course
     public int Credits { get; set; }
 
     [ForeignKey("TeacherID")]
-    public Guid? TeacherID { get; set; }
+    public Guid TeacherID { get; set; }
 
     // Navigation propertiesa
     public Teacher? Teacher { get; set; }

@@ -50,12 +50,5 @@ public class SchoolDBContext : DbContext
                         .HasForeignKey("CoursesCourseID")
                         .OnDelete(DeleteBehavior.NoAction)
             );
-
-        builder
-            .Entity<Course>()
-            .HasOne(c => c.Teacher)
-            .WithMany(t => t.Courses)
-            .HasForeignKey(c => c.TeacherID)
-            .OnDelete(DeleteBehavior.SetNull);
     }
 }

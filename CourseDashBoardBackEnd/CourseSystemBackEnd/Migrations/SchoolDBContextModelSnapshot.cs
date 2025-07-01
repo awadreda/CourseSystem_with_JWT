@@ -34,7 +34,7 @@ namespace CourseSystemBackEnd.Migrations
 
                     b.HasIndex("StudentsStudentID");
 
-                    b.ToTable("CourseStudent");
+                    b.ToTable("CourseStudent", (string)null);
                 });
 
             modelBuilder.Entity("CourseSystemBackEnd.Models.Course", b =>
@@ -51,7 +51,7 @@ namespace CourseSystemBackEnd.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<Guid?>("TeacherID")
+                    b.Property<Guid>("TeacherID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
@@ -63,7 +63,7 @@ namespace CourseSystemBackEnd.Migrations
 
                     b.HasIndex("TeacherID");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("CourseSystemBackEnd.Models.Student", b =>
@@ -83,7 +83,7 @@ namespace CourseSystemBackEnd.Migrations
                     b.HasIndex("UserID")
                         .IsUnique();
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("CourseSystemBackEnd.Models.Teacher", b =>
@@ -100,7 +100,7 @@ namespace CourseSystemBackEnd.Migrations
                     b.HasIndex("UserID")
                         .IsUnique();
 
-                    b.ToTable("Teachers");
+                    b.ToTable("Teachers", (string)null);
                 });
 
             modelBuilder.Entity("CourseSystemBackEnd.Models.User", b =>
@@ -133,7 +133,7 @@ namespace CourseSystemBackEnd.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("CourseStudent", b =>
@@ -156,7 +156,8 @@ namespace CourseSystemBackEnd.Migrations
                     b.HasOne("CourseSystemBackEnd.Models.Teacher", "Teacher")
                         .WithMany("Courses")
                         .HasForeignKey("TeacherID")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Teacher");
                 });
