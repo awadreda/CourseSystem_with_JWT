@@ -76,9 +76,33 @@ public class CourseRepository : ICourseRepository
 #pragma warning restore CS8603 // Possible null reference return.
     }
 
+    public async Task<List<Course>> GetCoursesByStudentIdAsync(Guid studentId)
+    {
+        return await _schoolDB
+            .Courses.Where(c => c.Students.Any(s => s.StudentID == studentId))
+            .ToListAsync();
+    }
+
+    public async Task<bool> IsStudentEnrolledInCourseAsync(Guid studentId, Guid courseId)
+    {
+        var course = await _schoolDB
+            .Courses.Include(c => c.Students)
+            .FirstOrDefaultAsync(c => c.CourseID == courseId);
+        if (course == null)
+        {
+            return false;
+        }
+        return course.Students.Any(s => s.StudentID == studentId);
+    }
+
     public async Task<List<Course>> GetCoursesByInstructorIdAsync(Guid instructorId)
     {
         return await _schoolDB.Courses.Where(c => c.TeacherID == instructorId).ToListAsync();
+    }
+
+    public async Task<bool> IsCourseExistsAsync(Guid courseId)
+    {
+        return await _schoolDB.Courses.AnyAsync(c => c.CourseID == courseId);
     }
 
     public async Task<bool> UnenrollStudentFromCourseAsync(Guid courseId, Guid studentId)

@@ -12,6 +12,13 @@ namespace CourseSystemBackEnd.Interfaces
         Task<Student> GetStudentByEmailAsync(string email);
         Task<Student> AddStudentAsync(Student student);
         Task<Student> UpdateStudentAsync(Student student);
+
+        Task<bool> AssignCourseToStudentAsync(Guid studentId, Guid courseId);
+        Task<bool> UnassignCourseFromStudentAsync(Guid studentId, Guid courseId);
+
+        Task<bool> IsStudentExistsAsync(Guid studentId);
+
+        Task<bool> IsStudentAssignedToCourseAsync(Guid studentId, Guid courseId);
         Task<bool> DeleteStudentAsync(Guid studentId);
     }
 }
