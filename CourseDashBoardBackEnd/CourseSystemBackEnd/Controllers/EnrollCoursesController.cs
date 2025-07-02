@@ -64,44 +64,44 @@ namespace CourseSystemBackEnd.Controllers
             return Ok(new { message = "Course assigned to teacher successfully." });
         }
 
-        [HttpPut("UnassignCourseToTeacherAsync,{teacherId},{courseId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UnassignCourseToTeacherAsync(Guid teacherId, Guid courseId)
-        {
-            var teacher = await _teacherRepository.GetTeacherByIdAsync(teacherId);
-            if (teacher == null)
-            {
-                return NotFound("Teacher not found.");
-            }
-            if (courseId == Guid.Empty)
-            {
-                return BadRequest("Invalid course ID.");
-            }
-            var course = await _courseRepository.GetCourseByIdAsync(courseId);
-            if (course == null)
-            {
-                return NotFound("Course not found.");
-            }
+        // [HttpPut("UnassignCourseToTeacherAsync,{teacherId},{courseId}")]
+        // [ProducesResponseType(StatusCodes.Status200OK)]
+        // [ProducesResponseType(StatusCodes.Status404NotFound)]
+        // [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        // [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        // [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        // public async Task<IActionResult> UnassignCourseToTeacherAsync(Guid teacherId, Guid courseId)
+        // {
+        //     var teacher = await _teacherRepository.GetTeacherByIdAsync(teacherId);
+        //     if (teacher == null)
+        //     {
+        //         return NotFound("Teacher not found.");
+        //     }
+        //     if (courseId == Guid.Empty)
+        //     {
+        //         return BadRequest("Invalid course ID.");
+        //     }
+        //     var course = await _courseRepository.GetCourseByIdAsync(courseId);
+        //     if (course == null)
+        //     {
+        //         return NotFound("Course not found.");
+        //     }
 
-            if (!_teacherRepository.IsTeacherAssignedToCourseAsync(teacherId, courseId).Result)
-            {
-                return BadRequest("Teacher is not assigned to the course.");
-            }
-            // Assuming you have a method in the repository to assign a course to a teacher
-            var result = await _teacherRepository.UnassignCourseFromTeacherAsync(
-                teacherId,
-                courseId
-            );
-            if (!result)
-            {
-                return NotFound("Teacher or Course not found.");
-            }
-            return Ok(new { message = "Course Unassigned to teacher successfully." });
-        }
+        //     if (!_teacherRepository.IsTeacherAssignedToCourseAsync(teacherId, courseId).Result)
+        //     {
+        //         return BadRequest("Teacher is not assigned to the course.");
+        //     }
+        //     // Assuming you have a method in the repository to assign a course to a teacher
+        //     var result = await _teacherRepository.UnassignCourseFromTeacherAsync(
+        //         teacherId,
+        //         courseId
+        //     );
+        //     if (!result)
+        //     {
+        //         return NotFound("Teacher or Course not found.");
+        //     }
+        //     return Ok(new { message = "Course Unassigned to teacher successfully." });
+        // }
 
         [HttpPut("EnrollStudentInCourseAsync,{studentId},{courseId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

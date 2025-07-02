@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using CourseSystemBackEnd.Data;
 using CourseSystemBackEnd.Interfaces;
 using CourseSystemBackEnd.Repository;
+using CourseSystemBackEnd.Services;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -33,6 +34,8 @@ public class Program
         builder.Services.AddScoped<IStudentRepository, StudentRerepository>();
         builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
         builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+        builder.Services.AddSingleton<PasswordService>();
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
