@@ -126,6 +126,4 @@ public class UserRepository : IUserRepository
         await _schoolDB.SaveChangesAsync();
         return existingUser.Result;
     }
-
-  
 }

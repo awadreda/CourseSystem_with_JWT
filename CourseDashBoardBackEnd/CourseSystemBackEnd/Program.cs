@@ -3,7 +3,10 @@ using CourseSystemBackEnd.Data;
 using CourseSystemBackEnd.Interfaces;
 using CourseSystemBackEnd.Repository;
 using CourseSystemBackEnd.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 
 namespace CourseSystemBackEnd;
@@ -13,6 +16,31 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        builder
+            .Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                var jwtSettings = builder.Configuration.GetSection("Jwt");
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = jwtSettings["Audience"],
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        System.Text.Encoding.UTF8.GetBytes(jwtSettings["Key"])
+                    ),
+                };
+            });
+
+        builder.Services.AddAuthorization();
 
         // Add services to the container.
 
@@ -34,7 +62,7 @@ public class Program
         builder.Services.AddScoped<IStudentRepository, StudentRerepository>();
         builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
         builder.Services.AddScoped<ICourseRepository, CourseRepository>();
-        
+
         builder.Services.AddSingleton<PasswordService>();
 
         var app = builder.Build();

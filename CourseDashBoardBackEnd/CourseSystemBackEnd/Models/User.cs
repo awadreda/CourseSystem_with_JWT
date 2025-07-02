@@ -20,6 +20,9 @@ public class User
 
     public string Role { get; set; } = string.Empty; // "Student", "Teacher", or "Admin"
 
+    public string? RefreshToken { get; set; }
+    public DateTime? RefreshTokenExpiryTime { get; set; }
+
     public Student? student { get; set; }
     public Teacher? teacher { get; set; }
 }
