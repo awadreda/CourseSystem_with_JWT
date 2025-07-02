@@ -1,10 +1,11 @@
+using CourseSystemBackEnd.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace CourseSystemBackEnd.Services;
 
-public class PasswordService
+public class PasswordService : IPasswordService
 {
-    private readonly PasswordHasher<object> _hasher = new();
+    private readonly PasswordHasher<User> _hasher = new();
 
     public string HashPassword(string password)
     {

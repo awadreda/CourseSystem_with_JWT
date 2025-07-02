@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CourseSystemBackEnd.Data;
 using CourseSystemBackEnd.Interfaces;
 using CourseSystemBackEnd.Models;
+using CourseSystemBackEnd.Services;
 using Microsoft.EntityFrameworkCore;
 
 public class UserRepository : IUserRepository
@@ -125,4 +126,6 @@ public class UserRepository : IUserRepository
         await _schoolDB.SaveChangesAsync();
         return existingUser.Result;
     }
+
+  
 }

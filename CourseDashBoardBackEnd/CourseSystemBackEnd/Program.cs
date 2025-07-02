@@ -34,6 +34,7 @@ public class Program
         builder.Services.AddScoped<IStudentRepository, StudentRerepository>();
         builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
         builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+        
         builder.Services.AddSingleton<PasswordService>();
 
         var app = builder.Build();

@@ -159,5 +159,16 @@ namespace CourseSystemBackEnd.Controllers
             }
             return Ok("User deleted successfully.");
         }
+
+
+        [HttpPut("HashAllUserPassword")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> HashAllUserPassword()
+        {
+            await _userRepository.HashAllUserPassword();
+            return Ok("All user passwords have been hashed.");
+        }
     }
 }

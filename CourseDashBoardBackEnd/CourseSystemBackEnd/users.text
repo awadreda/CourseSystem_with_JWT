@@ -1,0 +1,82 @@
+
+All Users
+
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+UUID & First Name & Last Name & Password & Email & Role \\
+\hline
+E4380194-B5E8-4FDB-BD9D-0697D458A45F & Karim & Saad & karim123 & karim.saad@example.com & Student \\
+6A3FA9D0-D90C-474F-B03D-069A61E4F124 & Nour & Osama & nour123 & nour.osama@example.com & Student \\
+46A6627E-F563-4CFD-7B11-08DDB64D38CB & lol2 & lo333 & reda123 & lol@gamil.com & Teacher \\
+BA569A7B-34C1-4283-8079-08DDB7028D34 & Awad & Reda & awad123 & awad@gmail.com & Teacher \\
+9C38D221-9B8B-4AAC-98C9-170162D58F38 & Nada & Ali & nada123 & nada.ali@example.com & Student \\
+38F15187-71CE-4666-8420-1DE1BA2758AD & Laila & Waleed & laila123 & laila.waleed@example.com & Student \\
+96EDA9D7-6E42-4AAD-B340-249B45ED72C2 & Tamer & Nabil & tamer123 & tamer.nabil@example.com & Student \\
+7A9DE6A7-3F8A-4524-8282-24E634D2402D & Rana & Samy & rana123 & rana.samy@example.com & Student \\
+483DE328-F138-492D-B510-3384C0407B5E & Mariam & Fouad & mariam123 & mariam.fouad@example.com & Student \\
+470EDD71-EEB5-486B-B139-40CE7CD6E979 & Tarek & Youssef & tarek123 & tarek.youssef@example.com & Teacher \\
+0EB5C6D9-612F-417B-A18D-637FB4F2E387 & Aya & Essam & aya123 & aya.essam@example.com & Student \\
+1DC21B35-28AE-447F-A940-69311F9C7366 & Omar & Mahmoud & omar123 & omar.mahmoud@example.com & Student \\
+B82AE5BF-BF60-4876-AF08-6A4D4C7CEEC9 & Ziad & Gamal & ziad123 & ziad.gamal@example.com & Student \\
+31E00737-DDAE-437F-B5B5-6E1286ACE9EE & Adham & Refaat & adham123 & adham.refaat@example.com & Student \\
+3DD21223-9DCE-4E0A-B797-6FAE57A18E88 & Nouran & Samir & nouran123 & nouran.samir@example.com & Teacher \\
+814DE997-31A5-4F2A-8FE4-7C69C5990FD8 & Khaled & Ali & khaled123 & khaled.ali@example.com & Student \\
+97574DFA-9399-453C-8E82-82BE12EB4707 & Omar & Fahmy & omar123 & omar.fahmy@example.com & Teacher \\
+09798D46-318A-4ACB-9EB9-9F96BB4F645B & Reem & Ashraf & reem123 & reem.ashraf@example.com & Student \\
+77E0B185-5567-4352-9D54-A7463392F3A1 & Youssef & Mostafa & youssef123 & youssef.mostafa@example.com & Student \\
+08255A46-BAFF-44B9-BAC1-B9C27648EB04 & Hassan & Eid & hassan123 & hassan.eid@example.com & Student \\
+A32D1147-FB7D-4F94-8903-BCD09B8A7A94 & Salma & Ali & salma123 & salma.ali@example.com & Teacher \\
+DFC48663-3781-46CC-96FF-C4B12FC635FB & Mohamed & Reda & mohamed123 & mohamed.reda@example.com & Student \\
+F473B9A8-56E6-4543-B4B7-CAADA13BE7CF & Mohamed & Ibrahim & mohamed123 & mohamed.ibrahim@example.com & Teacher \\
+FDCB3992-2677-49C3-AABC-D186060AC87F & Sara & Hossam & sara123 & sara.hossam@example.com & Student \\
+FA7A24C5-9341-4762-B970-D7B0ACED3C17 & Ehab & Fathy & ehab123 & ehab.fathy@example.com & Student \\
+6E74CFF3-B8BD-4ABE-9B70-D919EC55CA3A & Ahmed & Farse & ahmed123 & ahmed@gamil.com & Student \\
+BBD5B934-786D-4033-87A8-FA5724E0D256 & Farida & Tarek & farida123 & farida.tarek@example.com & Student \\
+7AFA35BA-4DC0-4DDB-AD72-FBE39F723306 & Mona & Khaled & mona123 & mona.khaled@example.com & Student \\
+ 
+\hline
+\end{tabular}
+
+\begin{landscape}
+\begin{longtable}{|c|c|c|c|c|c|}
+\hline
+UUID & First Name & Last Name & Password & Email & Role \\
+\hline
+28CEDFF3-82DA-4C50-8099-7C2676B04474 & Karim & Saad & karim.saad@example.com & karim123 & Student \\
+EF4ABF79-1C21-443C-9D1C-C9AF4979EC29 & Nour & Osama & nour.osama@example.com & nour123 & Student \\
+F1CB2802-7D36-41EA-B448-D7AE6A5F67BE & Nada & Ali & nada.ali@example.com & nada123 & Student \\
+E5492968-BEAF-412D-88D6-85DEB30E9646 & Laila & Waleed & laila.waleed@example.com & laila123 & Student \\
+1B9EBF5D-041D-4596-A34E-598184B27A6F & Tamer & Nabil & tamer.nabil@example.com & tamer123 & Student \\
+431926D9-006D-4CAA-A0E4-86835E3A0CF9 & Rana & Samy & rana.samy@example.com & rana123 & Student \\
+1FDED392-4643-4B11-B1FA-D36F715503EC & Mariam & Fouad & mariam.fouad@example.com & mariam123 & Student \\
+A3A547C4-21E3-4CE8-AEA1-3D6A111AE732 & Aya & Essam & aya.essam@example.com & aya123 & Student \\
+F16CB3CD-D179-43A4-9286-2BEACB26215F & Omar & Mahmoud & omar.mahmoud@example.com & omar123 & Student \\
+3A99F210-142E-4EEB-8F0F-E3A5C2D2132D & Ziad & Gamal & ziad.gamal@example.com & ziad123 & Student \\
+C89D5BB2-89D0-4D38-819F-9DF0B0D57DDA & Adham & Refaat & adham.refaat@example.com & adham123 & Student \\
+2E4CEB52-8297-4657-9601-68C189FEE5F5 & Khaled & Ali & khaled.ali@example.com & khaled123 & Student \\
+597A278A-CC93-4880-84E6-5FB6E4899A20 & Reem & Ashraf & reem.ashraf@example.com & reem123 & Student \\
+729F8D64-3BBF-47B4-9115-2A2F2A0DCE05 & Youssef & Mostafa & youssef.mostafa@example.com & youssef123 & Student \\
+B7319058-BEF8-4CD5-994E-398114D40E28 & Hassan & Eid & hassan.eid@example.com & hassan123 & Student \\
+3B29EC36-5647-4241-929E-674743286B25 & Mohamed & Reda & mohamed.reda@example.com & mohamed123 & Student \\
+9A27FE68-D588-4387-B5F9-D9EEF3EA9D67 & Sara & Hossam & sara.hossam@example.com & sara123 & Student \\
+290543CE-2DB3-49AC-9C33-948601D7F3A2 & Ehab & Fathy & ehab.fathy@example.com & ehab123 & Student \\
+980D7A81-163E-476C-9928-72331EFEC095 & Ahmed & Farse & ahmed@gamil.com & ahmed123 & Student \\
+9EAEA920-1085-45C6-B2EB-CF861E76C69E & Farida & Tarek & farida.tarek@example.com & farida123 & Student \\
+9C4D9EC8-FB59-4C0C-9304-B2EA5FD8D5DB & Mona & Khaled & mona.khaled@example.com & mona123 & Student \\
+\hline
+\end{longtable}
+\end{landscape}
+
+All Teachers
+
+\begin{longtable}{|c|c|c|c|c|c|}
+\hline
+UUID & First Name & Last Name & Password & Email & Role \\
+\hline
+B904487B-F557-418F-9995-69BCEBD9B8F7 & Awad & Reda & awad@gmail.com & awad123 & Teacher \\
+104C1724-B12A-40A5-A888-4DE420C924E0 & Tarek & Youssef & tarek.youssef@example.com & tarek123 & Teacher \\
+A0111ABC-0AAF-40BC-94B6-7D92E27E7938 & Nouran & Samir & nouran.samir@example.com & nouran123 & Teacher \\
+19C37FFE-C42D-43AB-AC3F-40DC0D365317 & Omar & Fahmy & omar.fahmy@example.com & omar123 & Teacher \\
+1FEB7704-9DF3-4845-95A2-0DD0A95DF66D & Salma & Ali & salma.ali@example.com & salma123 & Teacher \\
+935D0AE5-0054-42EC-A33B-B67A1040D856 & Mohamed & Ibrahim & mohamed.ibrahim@example.com & mohamed123 & Teacher \\
+
