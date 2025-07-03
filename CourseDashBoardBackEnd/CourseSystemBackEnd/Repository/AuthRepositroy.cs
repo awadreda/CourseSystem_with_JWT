@@ -18,11 +18,17 @@ public class AuthRepositroy : IAuthRepositroy
 {
     private readonly SchoolDBContext _schoolDB;
     private readonly IConfiguration _configuration;
+    private readonly IPasswordService _passwordService;
 
-    public AuthRepositroy(SchoolDBContext schoolDB, IConfiguration configuration)
+    public AuthRepositroy(
+        SchoolDBContext schoolDB,
+        IConfiguration configuration,
+        IPasswordService passwordService
+    )
     {
         _schoolDB = schoolDB;
         _configuration = configuration;
+        _passwordService = passwordService;
     }
 
     public async Task<TokenResponseDto?> Login(string email, string password)
@@ -44,9 +50,51 @@ public class AuthRepositroy : IAuthRepositroy
         return await CreateTokenResponse(user);
     }
 
-    public Task<User> Register(UserRegisterDTo userRegisterDTo, string password)
+    public async Task<User?> Register(UserRegisterDTo userRegisterDTo, string password)
     {
-        throw new NotImplementedException();
+        if (await _schoolDB.Users.AnyAsync(u => u.Email == userRegisterDTo.Email))
+        {
+            return null;
+        }
+
+        var user = new User
+        {
+            UserID = Guid.NewGuid(),
+            FirstName = userRegisterDTo.FirstName,
+            LastName = userRegisterDTo.LastName,
+            Email = userRegisterDTo.Email,
+            Password = _passwordService.HashPassword(userRegisterDTo.Password),
+            Role = userRegisterDTo.Role,
+        };
+
+        _schoolDB.Users.Add(user);
+
+        if (userRegisterDTo.Role.ToLower() == "student".ToLower())
+        {
+            var student = new Student
+            {
+                StudentID = Guid.NewGuid(),
+                UserID = user.UserID,
+                GPA = 0,
+            };
+            _schoolDB.Students.Add(student);
+        }
+
+        if (userRegisterDTo.Role.ToLower() == "Teacher".ToLower())
+        {
+            var teacher = new Teacher
+            {
+                TeacherID = Guid.NewGuid(),
+                UserID = user.UserID,
+                User = user,
+            };
+
+            _schoolDB.Teachers.Add(teacher);
+        }
+
+        await _schoolDB.SaveChangesAsync();
+
+        return user;
     }
 
     public Task<bool> UserExists(string email)
