@@ -162,14 +162,13 @@ public class AuthRepositroy : IAuthRepositroy
             new Claim(ClaimTypes.Role, user.Role),
         };
 
-        var Key = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(_configuration.GetValue<string>("AppSettings:Token")!)
-        );
+        var key = _configuration.GetSection("Jwt")["Key"];
+        var Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key!));
         var cred = new SigningCredentials(Key, SecurityAlgorithms.HmacSha512);
 
         var tokenDescriptor = new JwtSecurityToken(
-            issuer: _configuration.GetValue<string>("AppSettings:Issuer"),
-            audience: _configuration.GetValue<string>("AppSettings:Audience"),
+            issuer: _configuration.GetValue<string>("Jwt:Issuer"),
+            audience: _configuration.GetValue<string>("Jwt:Audience"),
             claims: claims,
             expires: DateTime.UtcNow.AddDays(1),
             signingCredentials: cred

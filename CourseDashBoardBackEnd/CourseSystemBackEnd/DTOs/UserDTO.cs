@@ -39,8 +39,8 @@ public class UserRegisterDTo
     public string Role { get; set; } = string.Empty;
 }
 
-public class UserLogin
+public class UserLoginDTO
 {
     public string Email { get; set; } = string.Empty;
-    public string Role { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
 }

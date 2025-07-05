@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CourseSystemBackEnd.DTOs;
 using CourseSystemBackEnd.Interfaces;
 using CourseSystemBackEnd.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CourseSystemBackEnd.Controllers
@@ -19,7 +20,7 @@ namespace CourseSystemBackEnd.Controllers
         {
             _courseRepository = courseRepository;
         }
-
+       [Authorize(Roles = "Teacher")]
         [HttpGet("GetAllCourses")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

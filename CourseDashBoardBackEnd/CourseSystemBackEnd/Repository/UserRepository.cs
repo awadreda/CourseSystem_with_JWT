@@ -126,4 +126,9 @@ public class UserRepository : IUserRepository
         await _schoolDB.SaveChangesAsync();
         return existingUser.Result;
     }
+
+    public Task<bool> UserExists(string email)
+    {
+        return _schoolDB.Users.AnyAsync(u => u.Email == email);
+    }
 }

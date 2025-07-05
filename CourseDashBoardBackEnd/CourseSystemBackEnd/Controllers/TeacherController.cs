@@ -6,6 +6,7 @@ using CourseSystemBackEnd.DTOs.TeacherDTOs;
 using CourseSystemBackEnd.Interfaces;
 using CourseSystemBackEnd.Mappers;
 using CourseSystemBackEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CourseSystemBackEnd.Controllers
@@ -49,6 +50,7 @@ namespace CourseSystemBackEnd.Controllers
             return Ok(teacher.ToTeacherReadDTO());
         }
 
+        [Authorize]
         [HttpGet("GetAllTeachers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

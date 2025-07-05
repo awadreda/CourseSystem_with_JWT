@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Text.Json.Serialization;
 using CourseSystemBackEnd.Data;
 using CourseSystemBackEnd.Interfaces;
@@ -16,6 +17,12 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+      
+        builder.Services.AddDbContext<SchoolDBContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+        );
+
+        builder.Services.AddOpenApi();
 
         builder
             .Services.AddAuthentication(options =>
@@ -29,6 +36,7 @@ public class Program
                 var jwtSettings = builder.Configuration.GetSection("Jwt");
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
+                    RoleClaimType = ClaimTypes.Role,
                     ValidateIssuer = true,
                     ValidIssuer = jwtSettings["Issuer"],
                     ValidateAudience = true,
@@ -51,19 +59,16 @@ public class Program
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             });
 
-        builder.Services.AddDbContext<SchoolDBContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-        );
         builder.Services.AddControllers();
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        builder.Services.AddOpenApi();
 
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<IStudentRepository, StudentRerepository>();
         builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
         builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+        builder.Services.AddScoped<IAuthRepositroy, AuthRepositroy>();
 
-        builder.Services.AddSingleton<PasswordService>();
+        builder.Services.AddScoped<IPasswordService, PasswordService>();
 
         var app = builder.Build();
 
@@ -76,6 +81,7 @@ public class Program
 
         app.UseHttpsRedirection();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();
