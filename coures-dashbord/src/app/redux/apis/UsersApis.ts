@@ -11,7 +11,7 @@ const api = axios.create({
 
 export const getAllUsersApi = async () => {
   try {
-    const response = await api.get(`/User/AGUeellrsst`, {
+    const response = await api.get(`/User/GetAllUsers`, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'text/plain'

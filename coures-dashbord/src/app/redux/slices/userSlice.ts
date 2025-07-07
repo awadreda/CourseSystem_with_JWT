@@ -31,8 +31,15 @@ const initialState: UserState = {
   CurrentUser: null
 }
 
-export const getAllUsers = createAsyncThunk(`/User/AGUeellrsst`, async () => {
+export const getAllUsers = createAsyncThunk(`/User/GetAllUsers`, async () => {
   const response = await getAllUsersApi()
+  if (!response) {
+    throw new Error('Failed to fetch users')
+  }
+  if (response.errors) {
+    throw new Error(response.errors)
+  }
+  console.log('response users from getalluserSLice ', response)
 
   return response
 })

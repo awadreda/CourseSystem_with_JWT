@@ -59,6 +59,18 @@ public class Program
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             });
 
+
+             builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(builder =>
+            {
+                builder
+                    .AllowAnyOrigin() // Allow requests from any origin
+                    .AllowAnyMethod() // Allow all HTTP methods
+                    .AllowAnyHeader(); // Allow all headers
+            });
+        });
+
         builder.Services.AddControllers();
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
@@ -80,6 +92,8 @@ public class Program
         }
 
         app.UseHttpsRedirection();
+
+        app.UseCors(); // ← دا اللي بيشغل إعدادات CORS اللي فوق
 
         app.UseAuthentication();
         app.UseAuthorization();
