@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import React from 'react'
 
@@ -21,25 +22,25 @@ export default function layout ({ children }: { children: React.ReactNode }) {
 
           <Link
             className='hover:bg-gray-700 px-3 py-2 rounded'
-            href='/dashboard/admin/users'
+            href='/dashboard/admin/userslist'
           >
             Users
           </Link>
           <Link
             className='hover:bg-gray-700 px-3 py-2 rounded'
-            href='/dashboard/admin/courses'
+            href='/dashboard/admin/courseslist'
           >
             Courses
           </Link>
           <Link
             className='hover:bg-gray-700 px-3 py-2 rounded'
-            href='/dashboard/admin/students'
+            href='/dashboard/admin/studentslist'
           >
             Students
           </Link>
           <Link
             className='hover:bg-gray-700 px-3 py-2 rounded'
-            href='/dashboard/admin/teachers'
+            href='/dashboard/admin/teacherslist'
           >
             Teachers
           </Link>
