@@ -45,7 +45,7 @@ export const getAllUsers = createAsyncThunk(`/User/GetAllUsers`, async () => {
 })
 
 export const getUserByID = createAsyncThunk(
-  `/User/BGIUdeersty`,
+  `/User/GetUserByID`,
   async (id: string) => {
     const response = await getUserByIdApi(id)
 

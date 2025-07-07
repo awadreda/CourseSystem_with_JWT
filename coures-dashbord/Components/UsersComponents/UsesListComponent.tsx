@@ -12,20 +12,24 @@ import TableRow from '@mui/material/TableRow'
 
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
 import { getAllUsers } from '@/app/redux/slices/userSlice'
+import UserInfoDialog from './Dialogs/UserInfoDialog'
+import UserEditDialog from './Dialogs/UserEditDialog'
+import UserDeleteDialog from './Dialogs/UserDeleteDialog'
 // import { UserReadDTO } from '../../types/types'
 
 interface Column {
-  id: `fullname` | 'email' | 'role'
+  id: `fullname` | 'email' | 'role' | `Options`
   label: string
   minWidth?: number
-  align?: 'right'
+  align?: 'right' | 'left' | 'center'
   format?: (value: number) => string
 }
 
 const columns: Column[] = [
   { id: 'fullname', label: 'Full Name', minWidth: 170 },
   { id: 'email', label: 'Email', minWidth: 170 },
-  { id: 'role', label: 'Role', minWidth: 170 }
+  { id: 'role', label: 'Role', minWidth: 170 },
+  { id: 'Options', label: 'Options', minWidth: 170, align: 'left' }
 ]
 
 function createUserData (
@@ -131,7 +135,6 @@ export default function UsersListComponent () {
     setPage(newPage)
   }
 
-
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -144,7 +147,6 @@ export default function UsersListComponent () {
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label='sticky table'>
           <TableHead>
-          
             <TableRow>
               {columns.map(column => (
                 <TableCell
@@ -172,6 +174,14 @@ export default function UsersListComponent () {
                       let value
                       if (column.id === 'fullname') {
                         value = `${user.firstName} ${user.lastName}`
+                      } else if (column.id === 'Options') {
+                        value = (
+                          <div className='flex gap-2'>
+                            <UserInfoDialog userId={user.userID} />
+                            <UserEditDialog user={user} />
+                            <UserDeleteDialog userId={user.userID} />
+                          </div>
+                        )
                       } else {
                         value = user[column.id]
                       }

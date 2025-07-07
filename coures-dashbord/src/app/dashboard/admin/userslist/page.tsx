@@ -13,7 +13,7 @@ const UserList = (props: Props) => {
     <div className='flex p-3 w-full gap-5  flex-col justify-center bg-black'>
       <h2 className=' mt-10  text-4xl font-bold'>UsersList</h2>
 
-      <UserInfoDialog />
+      {/* <UserInfoDialog />
       <UserDeleteDialog userId='12345' />
       <UserEditDialog
         user={{
@@ -23,7 +23,7 @@ const UserList = (props: Props) => {
           email: '',
           role: ''
         }}
-      />
+      /> */}
 
       <UsersListComponent />
     </div>

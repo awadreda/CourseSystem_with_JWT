@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useEffect } from 'react'
 import {
   Button,
   Dialog,
@@ -15,6 +16,13 @@ import InfoIcon from '@mui/icons-material/Info'
 import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles'
 import CloseIcon from '@mui/icons-material/Close'
+import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
+import { useDispatch } from 'react-redux'
+import {
+  getAllUsers,
+  getUserByID,
+  UpdatUser
+} from '@/app/redux/slices/userSlice'
 
 // نوع البيانات (UserReadDTO)
 export interface UserReadDTO {
@@ -43,8 +51,11 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   }
 }))
 
-export default function UserInfoDialog () {
+export default function UserInfoDialog ({ userId }: { userId: string }) {
   const [open, setOpen] = React.useState(false)
+  const userApi = useAppSelector(state => state.user)
+  const user = userApi.CurrentUser
+  const dispatch = useAppDispatch()
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -53,9 +64,15 @@ export default function UserInfoDialog () {
     setOpen(false)
   }
 
+  useEffect(() => {
+    if (userApi.status === 'idle' && userId) {
+      dispatch(getUserByID(userId))
+    }
+  }, [])
+
   return (
     <React.Fragment>
-      <IconButton color="primary" onClick={handleClickOpen}>
+      <IconButton color='primary' onClick={handleClickOpen}>
         <InfoIcon />
       </IconButton>
       <BootstrapDialog
