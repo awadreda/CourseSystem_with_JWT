@@ -12,10 +12,10 @@ import TableRow from '@mui/material/TableRow'
 
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
 import { getAllUsers } from '@/app/redux/slices/userSlice'
-import { UserReadDTO } from '../../types/types'
+// import { UserReadDTO } from '../../types/types'
 
 interface Column {
-  id: 'userID' | 'firstName' | 'lastName' | 'email' | 'role'
+  id: `fullname` | 'email' | 'role'
   label: string
   minWidth?: number
   align?: 'right'
@@ -23,13 +23,95 @@ interface Column {
 }
 
 const columns: Column[] = [
-  { id: 'userID', label: 'User ID', minWidth: 170 },
-  { id: 'firstName', label: 'First Name', minWidth: 170 },
-  { id: 'lastName', label: 'Last Name', minWidth: 170 },
+  { id: 'fullname', label: 'Full Name', minWidth: 170 },
   { id: 'email', label: 'Email', minWidth: 170 },
   { id: 'role', label: 'Role', minWidth: 170 }
 ]
 
+function createUserData (
+  userID: string,
+  firstName: string,
+  lastName: string,
+  email: string,
+  role: string
+): UserReadDTO {
+  return { userID, firstName, lastName, email, role }
+}
+
+export const users: UserReadDTO[] = [
+  {
+    userID: 'e3b0c442-98fc-1fcf-bc4c-000000000001',
+    firstName: 'Ahmed',
+    lastName: 'Samir',
+    email: 'ahmed.samir@example.com',
+    role: 'Admin'
+  },
+  {
+    userID: 'e3b0c442-98fc-1fcf-bc4c-000000000002',
+    firstName: 'Mona',
+    lastName: 'Hassan',
+    email: 'mona.hassan@example.com',
+    role: 'Student'
+  },
+  {
+    userID: 'e3b0c442-98fc-1fcf-bc4c-000000000003',
+    firstName: 'Youssef',
+    lastName: 'Ali',
+
+    email: 'youssef.ali@example.com',
+    role: 'Teacher'
+  },
+  {
+    userID: 'e3b0c442-98fc-1fcf-bc4c-000000000004',
+    firstName: 'Fatma',
+    lastName: 'Omar',
+    email: 'fatma.omar@example.com',
+    role: 'Student'
+  },
+  {
+    userID: 'e3b0c442-98fc-1fcf-bc4c-000000000005',
+    firstName: 'Khaled',
+    lastName: 'Saeed',
+    email: 'khaled.saeed@example.com',
+    role: 'Admin'
+  },
+  {
+    userID: 'e3b0c442-98fc-1fcf-bc4c-000000000006',
+    firstName: 'Ahmed',
+    lastName: 'Samir',
+    email: 'ahmed.samir@example.com',
+    role: 'Admin'
+  },
+  {
+    userID: 'e3b0c442-98fc-1fcf-bc4c-000000000007',
+    firstName: 'Mona',
+    lastName: 'Hassan',
+    email: 'mona.hassan@example.com',
+    role: 'Student'
+  },
+  {
+    userID: 'e3b0c442-98fc-1fcf-bc4c-000000000008',
+    firstName: 'Youssef',
+    lastName: 'Ali',
+    email: 'youssef.ali@example.com',
+    role: 'Teacher'
+  },
+  {
+    userID: 'e3b0c442-98fc-1fcf-bc4c-000000000009',
+    firstName: 'Fatma',
+    lastName: 'Omar',
+    email: 'fatma.omar@example.com',
+    role: 'Student'
+  }
+]
+
+export interface UserReadDTO {
+  userID: string // uuid
+  firstName: string
+  lastName: string
+  email: string
+  role: string
+}
 interface Data {
   userID: string
   firstName: string
@@ -69,19 +151,20 @@ interface Data {
 export default function UsersListComponent () {
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
-  const UsersApi = useAppSelector(state => state.user)
-  const users: UserReadDTO[] = UsersApi.users
-  const dispatch = useAppDispatch()
+  // const UsersApi = useAppSelector(state => state.user)
+  // const users: UserReadDTO[] = UsersApi.users
+  // const dispatch = useAppDispatch()
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
   }
 
-  useEffect(() => {
-    if (UsersApi.status === 'idle') {
-      dispatch(getAllUsers())
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (UsersApi.status === 'idle') {
+  //     dispatch(getAllUsers())
+  //   }else if (UsersApi.status === 'failed') {
+  //   }
+  // }, [])
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -108,7 +191,7 @@ export default function UsersListComponent () {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ top: 57, minWidth: column.minWidth }}
+                  style={{ top: 0, minWidth: column.minWidth }}
                 >
                   {column.label}
                 </TableCell>
@@ -127,7 +210,13 @@ export default function UsersListComponent () {
                     key={user.userID}
                   >
                     {columns.map(column => {
-                      const value = user[column.id]
+                      let value
+                      if (column.id === 'fullname') {
+                        value = `${user.firstName} ${user.lastName}`
+                      } else {
+                        value = user[column.id]
+                      }
+
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {column.format && typeof value === 'number'

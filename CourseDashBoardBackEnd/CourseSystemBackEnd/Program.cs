@@ -17,7 +17,7 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-      
+
         builder.Services.AddDbContext<SchoolDBContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
         );
@@ -59,8 +59,7 @@ public class Program
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             });
 
-
-             builder.Services.AddCors(options =>
+        builder.Services.AddCors(options =>
         {
             options.AddDefaultPolicy(builder =>
             {
