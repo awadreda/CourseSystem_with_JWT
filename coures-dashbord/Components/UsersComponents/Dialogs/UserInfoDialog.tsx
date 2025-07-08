@@ -34,7 +34,7 @@ export interface UserReadDTO {
 }
 
 // دي بيانات تجريبية
-const demoUser: UserReadDTO = {
+const user: UserReadDTO = {
   userID: 'e3b0c442-98fc-1fcf-bc4c-000000000001',
   firstName: 'Ahmed',
   lastName: 'Samir',
@@ -51,11 +51,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   }
 }))
 
-export default function UserInfoDialog ({ userId }: { userId: string }) {
+export default function UserInfoDialog ({user}:{user:UserReadDTO}) {
   const [open, setOpen] = React.useState(false)
   const userApi = useAppSelector(state => state.user)
-  const user = userApi.CurrentUser
-  const dispatch = useAppDispatch()
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -64,11 +62,7 @@ export default function UserInfoDialog ({ userId }: { userId: string }) {
     setOpen(false)
   }
 
-  useEffect(() => {
-    if (userApi.status === 'idle' && userId) {
-      dispatch(getUserByID(userId))
-    }
-  }, [])
+  
 
   return (
     <React.Fragment>
@@ -104,24 +98,24 @@ export default function UserInfoDialog ({ userId }: { userId: string }) {
               <Grid container spacing={2} alignItems='center'>
                 <Grid>
                   <Avatar sx={{ width: 64, height: 64 }}>
-                    {demoUser.firstName[0]}
+                    {user.firstName[0]}
                   </Avatar>
                 </Grid>
                 <Grid>
                   <Typography variant='h6'>
-                    {demoUser.firstName} {demoUser.lastName}
+                    {user.firstName} {user.lastName}
                   </Typography>
                   <Typography color='text.secondary'>
-                    {demoUser.role}
+                    {user.role}
                   </Typography>
                 </Grid>
               </Grid>
 
               <Typography sx={{ mt: 2 }}>
-                <strong>Email:</strong> {demoUser.email}
+                <strong>Email:</strong> {user.email}
               </Typography>
               <Typography>
-                <strong>User ID:</strong> {demoUser.userID}
+                <strong>User ID:</strong> {user.userID}
               </Typography>
             </CardContent>
           </Card>

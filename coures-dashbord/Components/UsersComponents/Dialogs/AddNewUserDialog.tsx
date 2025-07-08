@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
@@ -6,27 +7,38 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import { UserReadDTO, UserUpdateDTO } from '../../../types/types'
-import { IconButton } from '@mui/material'
-import EditIcon from '@mui/icons-material/Edit'
+import { UserCreateDTO, UserReadDTO } from '../../../types/types'
+import { Alert, IconButton } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
-import { getAllUsers, UpdatUser } from '@/app/redux/slices/userSlice'
-import { toast } from 'react-toastify'
-import { get } from 'http'
 
-export default function UserEditDialog ({ user }: { user: UserReadDTO }) {
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2)
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1)
+  }
+}))
+
+const BootstrapDialogTitle = styled(DialogTitle)(({ theme }) => ({
+  '& .MuiTypography-root': {
+    fontSize: 24
+  }
+}))
+
+export default function AddNewUserDialog () {
   const [open, setOpen] = React.useState(false)
+  const [userCreate, setUserCreate] = React.useState<UserCreateDTO>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    role: ''
+  })
 
   const dispatch = useAppDispatch()
   const userApi = useAppSelector(state => state.user)
-  const [userToUpdate, setUserToUpdate] = React.useState<UserUpdateDTO>({
-    userID: user.userID,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    password: '', // Password is not required for update
-    role: user.role
-  })
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -34,11 +46,13 @@ export default function UserEditDialog ({ user }: { user: UserReadDTO }) {
 
   const handleClose = () => {
     setOpen(false)
+    return
+   
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
-    setUserToUpdate(prevState => ({
+    setUserCreate(prevState => ({
       ...prevState,
       [name]: value
     }))
@@ -46,52 +60,37 @@ export default function UserEditDialog ({ user }: { user: UserReadDTO }) {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    // const formData = new FormData(event.currentTarget)
-    // const formJson = Object.fromEntries((formData as any).entries())
-    // // const email = formJson.email
-    // console.log(formJson)
-    dispatch(UpdatUser(userToUpdate)).then(() => {
-      if (userApi.status === 'idle') {
-        toast.success('User updated successfully', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light'
-        })
-      }
+    
 
-      if (userApi.status === 'failed') {
-        toast.error('Failed to update user', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light'
-        })
-      }
-
-      dispatch(getAllUsers())
-    })
     handleClose()
   }
 
   return (
     <React.Fragment>
-      <IconButton color='primary' onClick={handleClickOpen}>
-        <EditIcon />
-      </IconButton>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Edit User</DialogTitle>
-        <DialogContent sx={{ paddingBottom: 0 }}>
+      <Button
+        color='primary'
+        variant='outlined'
+        sx={{
+          fontSize: '18px',
+          fontWeight: 'bold',
+          borderRadius: '10px',
+          width: `fit-content`
+        }}
+        onClick={handleClickOpen}
+      >
+        <AddIcon /> add new User
+      </Button>
+      <BootstrapDialog
+        onClose={handleClose}
+        aria-labelledby='customized-dialog-title'
+        open={open}
+      >
+        <BootstrapDialogTitle id='customized-dialog-title'>
+          Add New User
+        </BootstrapDialogTitle>
+        <DialogContent dividers>
           <DialogContentText>
-            To edit this user, please enter the new information here.
+            To add a new user, please enter the required information here.
           </DialogContentText>
           <form onSubmit={handleSubmit}>
             <TextField
@@ -104,7 +103,7 @@ export default function UserEditDialog ({ user }: { user: UserReadDTO }) {
               type='text'
               fullWidth
               variant='standard'
-              value={userToUpdate.firstName}
+              value={userCreate.firstName}
               onChange={handleChange}
             />
             <TextField
@@ -116,7 +115,7 @@ export default function UserEditDialog ({ user }: { user: UserReadDTO }) {
               type='text'
               fullWidth
               variant='standard'
-              value={userToUpdate.lastName}
+              value={userCreate.lastName}
               onChange={handleChange}
             />
             <TextField
@@ -128,22 +127,21 @@ export default function UserEditDialog ({ user }: { user: UserReadDTO }) {
               type='email'
               fullWidth
               variant='standard'
-              value={userToUpdate.email}
+              value={userCreate.email}
               onChange={handleChange}
             />
-
             <TextField
+              required
               margin='dense'
               id='password'
               name='password'
-              label='Password (leave blank to keep current password)'
+              label='Password'
               type='password'
               fullWidth
               variant='standard'
-              value={userToUpdate.password}
+              value={userCreate.password}
               onChange={handleChange}
             />
-
             <TextField
               required
               margin='dense'
@@ -153,16 +151,20 @@ export default function UserEditDialog ({ user }: { user: UserReadDTO }) {
               type='text'
               fullWidth
               variant='standard'
-              value={userToUpdate.role}
+              value={userCreate.role}
               onChange={handleChange}
             />
             <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button type='submit'>Update</Button>
+              <Button color='secondary' onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button color='primary' type='submit'>
+                Add
+              </Button>
             </DialogActions>
           </form>
         </DialogContent>
-      </Dialog>
+      </BootstrapDialog>
     </React.Fragment>
   )
 }
