@@ -11,6 +11,10 @@ import { UserCreateDTO, UserReadDTO } from '../../../types/types'
 import { Alert, IconButton } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
+import { RegisterNewUser } from '@/app/redux/slices/AuthSlice'
+import AuthSlice from '../../../src/app/redux/slices/AuthSlice'
+import { toast } from 'react-toastify'
+import { getAllUsers } from '@/app/redux/slices/userSlice'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -38,7 +42,7 @@ export default function AddNewUserDialog () {
   })
 
   const dispatch = useAppDispatch()
-  const userApi = useAppSelector(state => state.user)
+  const userApi = useAppSelector(state => state.auth)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -47,7 +51,6 @@ export default function AddNewUserDialog () {
   const handleClose = () => {
     setOpen(false)
     return
-   
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,8 +63,36 @@ export default function AddNewUserDialog () {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    
 
+    dispatch(RegisterNewUser(userCreate)).then(response => {
+      if (response.meta.requestStatus === 'fulfilled') {
+        toast.success('User added successfully!', {
+          position: 'bottom-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light'
+        })
+
+        dispatch(getAllUsers())
+      }
+
+      if (response.meta.requestStatus === 'rejected') {
+        toast.error('Failed to add user', {
+          position: 'bottom-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light'
+        })
+      }
+    })
     handleClose()
   }
 

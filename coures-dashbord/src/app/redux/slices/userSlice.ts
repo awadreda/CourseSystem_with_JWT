@@ -11,7 +11,7 @@ import {
 
 interface UserState {
   users: UserReadDTO[]
-  status: 'idle' | 'loading' | 'succeeded' | 'failed'
+  status:  'loading' | 'succeeded' | 'failed'
   errors: string | null
   user: UserReadDTO
   CurrentUser: UserReadDTO | null
@@ -19,7 +19,7 @@ interface UserState {
 
 const initialState: UserState = {
   users: [],
-  status: 'idle',
+  status: 'succeeded',
   errors: null,
   user: {
     userID: '',

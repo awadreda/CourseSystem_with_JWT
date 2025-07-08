@@ -144,8 +144,8 @@ export default function UsersListComponent () {
   }
 
   useEffect(() => {
-    if (UsersApi.status === 'idle') dispatch(getAllUsers())
-  }, [users, dispatch, UsersApi.status])
+    if (UsersApi.status === 'succeeded') dispatch(getAllUsers())
+  }, [])
 
   if (UsersApi.status === 'failed') {
     return (

@@ -1,5 +1,4 @@
 import { UserUpdateDTO } from '../../../../types/types'
-import { Update } from '@mui/icons-material'
 import axios from 'axios'
 
 const api = axios.create({
@@ -24,8 +23,7 @@ export const getAllUsersApi = async () => {
   }
 }
 
-export const getUserByIdApi
- = async (id: string) => {
+export const getUserByIdApi = async (id: string) => {
   try {
     const response = await api.get(
       `/User/GetUserById/${id}
@@ -44,8 +42,7 @@ export const getUserByIdApi
   }
 }
 
-export const getUserByEmailApi
- = async (email: string) => {
+export const getUserByEmailApi = async (email: string) => {
   try {
     const response = await api.get(`/User/GetUserByEmail/${email}`, {
       headers: {

@@ -53,7 +53,7 @@ export default function UserEditDialog ({ user }: { user: UserReadDTO }) {
     dispatch(UpdatUser(userToUpdate)).then(() => {
       if (userApi.status === 'idle') {
         toast.success('User updated successfully', {
-          position: 'top-right',
+          position: 'bottom-left',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -62,11 +62,27 @@ export default function UserEditDialog ({ user }: { user: UserReadDTO }) {
           progress: undefined,
           theme: 'light'
         })
+        dispatch(getAllUsers())
       }
+
+      if (userApi.status === 'succeeded') {
+  toast.success('User updated successfully', {
+    position: 'bottom-left',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'light'
+  })
+  dispatch(getAllUsers())
+}
+
 
       if (userApi.status === 'failed') {
         toast.error('Failed to update user', {
-          position: 'top-right',
+          position: 'bottom-left',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -76,8 +92,6 @@ export default function UserEditDialog ({ user }: { user: UserReadDTO }) {
           theme: 'light'
         })
       }
-
-      dispatch(getAllUsers())
     })
     handleClose()
   }
