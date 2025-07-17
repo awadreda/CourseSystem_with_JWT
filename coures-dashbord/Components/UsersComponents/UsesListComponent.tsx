@@ -193,7 +193,7 @@ export default function UsersListComponent () {
                             <div className='flex gap-2'>
                               <UserInfoDialog user={user} />
                               <UserEditDialog user={user} />
-                              <UserDeleteDialog userId={user.userID} />
+                              <UserDeleteDialog user={user} />
                             </div>
                           )
                         } else {
@@ -230,9 +230,8 @@ export default function UsersListComponent () {
   return (
     <div className='flex justify-center items-center h-screen'>
       <CircularProgress
-       size={150}
-       sx={{
-         
+        size={150}
+        sx={{
           position: 'absolute',
           top: '50%',
           left: '50%'

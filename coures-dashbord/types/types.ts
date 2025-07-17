@@ -1,5 +1,6 @@
 
 
+
 // User Types 
 
 
@@ -41,4 +42,24 @@ export interface UserCreateDTO {
   email: string
   password: string
   role: string
+}
+
+
+export interface StudentCreateDTO {
+  gpa : number;
+  courses? : string[] | null; // Array of course IDs or null if no courses
+  user: UserCreateDTO; // UserCreateDTO object
+
+}
+
+export interface StudentReadDTO {
+  studentID: string; // uuid
+  gpa: number;
+  courses?: string[] | null; // Array of course IDs or null if no courses
+  user: UserReadDTO; // UserReadDTO object
+}
+export interface StudentUpdateDTO {
+  studentID: string; // uuid
+  gpa: number;
+  UserUpdateDTO: UserUpdateDTO; // UserUpdateDTO object
 }

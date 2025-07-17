@@ -8,7 +8,15 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import { UserCreateDTO, UserReadDTO } from '../../../types/types'
-import { Alert, IconButton } from '@mui/material'
+import {
+  Alert,
+  colors,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent
+} from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
 import { RegisterNewUser } from '@/app/redux/slices/AuthSlice'
@@ -59,6 +67,11 @@ export default function AddNewUserDialog () {
       ...prevState,
       [name]: value
     }))
+  }
+
+  const handleSelectChange = (event: SelectChangeEvent) => {
+    const { name, value } = event.target
+    setUserCreate(prev => ({ ...prev, [name]: value }))
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -173,7 +186,7 @@ export default function AddNewUserDialog () {
               value={userCreate.password}
               onChange={handleChange}
             />
-            <TextField
+            {/* <TextField
               required
               margin='dense'
               id='role'
@@ -184,7 +197,25 @@ export default function AddNewUserDialog () {
               variant='standard'
               value={userCreate.role}
               onChange={handleChange}
-            />
+            /> */}
+
+            <InputLabel id='demo-simple-select-label'>Role</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              margin='dense'
+              id ='role'
+              fullWidth
+              color='primary'
+              sx={{color:"white"}}
+
+              value={userCreate.role}
+              label='Role'
+              onChange={handleSelectChange}
+            >
+              <MenuItem value={'Studnet'}>Studnet</MenuItem>
+              <MenuItem value={'Teacher'}>Teacher</MenuItem>
+            </Select>
+
             <DialogActions>
               <Button color='secondary' onClick={handleClose}>
                 Cancel

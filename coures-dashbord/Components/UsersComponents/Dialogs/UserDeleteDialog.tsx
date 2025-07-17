@@ -5,7 +5,14 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import { IconButton } from '@mui/material'
+import {
+  Avatar,
+  Card,
+  CardContent,
+  Grid,
+  IconButton,
+  Typography
+} from '@mui/material'
 
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
@@ -14,12 +21,13 @@ import {
   getAllUsers
 } from '../../../src/app/redux/slices/userSlice'
 import { toast } from 'react-toastify'
+import { UserReadDTO } from './UserInfoDialog'
 type UserDeleteDialogProps = {
-  userId: string
+  user: UserReadDTO
   // onDelete: (userId: string) => void
 }
 
-export default function UserDeleteDialog ({ userId }: UserDeleteDialogProps) {
+export default function UserDeleteDialog ({ user }: UserDeleteDialogProps) {
   const [open, setOpen] = React.useState(false)
   const dispatch = useAppDispatch()
   const userAPi = useAppSelector(state => state.user)
@@ -35,7 +43,7 @@ export default function UserDeleteDialog ({ userId }: UserDeleteDialogProps) {
   const onDelete = (userId: string) => {
     dispatch(deleteUser(userId)).then(response => {
       if (response.meta.requestStatus === 'fulfilled') {
-        toast.success('User deleted successfully', {
+        toast.success(`User with ${user.email} deleted successfully`, {
           position: 'bottom-right',
           autoClose: 5000,
           hideProgressBar: false,
@@ -61,9 +69,9 @@ export default function UserDeleteDialog ({ userId }: UserDeleteDialogProps) {
       }
     })
   }
-  
+
   const handleDelete = () => {
-    onDelete(userId)
+    onDelete(user.userID)
     setOpen(false)
   }
 
@@ -81,8 +89,33 @@ export default function UserDeleteDialog ({ userId }: UserDeleteDialogProps) {
         <DialogTitle id='alert-dialog-title'>{'Delete User'}</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
-            Are you sure you want to delete this user?
+            Are you sure you want to delete this user {user.email}?
           </DialogContentText>
+          ;
+          <Card elevation={3} sx={{ borderRadius: 2 }}>
+            <CardContent>
+              <Grid container spacing={2} alignItems='center'>
+                <Grid>
+                  <Avatar sx={{ width: 64, height: 64 }}>
+                    {user.firstName[0]}
+                  </Avatar>
+                </Grid>
+                <Grid>
+                  <Typography variant='h6'>
+                    {user.firstName} {user.lastName}
+                  </Typography>
+                  <Typography color='text.secondary'>{user.role}</Typography>
+                </Grid>
+              </Grid>
+
+              <Typography sx={{ mt: 2 }}>
+                <strong>Email:</strong> {user.email}
+              </Typography>
+              <Typography>
+                <strong>User ID:</strong> {user.userID}
+              </Typography>
+            </CardContent>
+          </Card>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

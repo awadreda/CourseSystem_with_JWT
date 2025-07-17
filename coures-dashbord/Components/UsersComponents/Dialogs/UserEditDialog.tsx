@@ -7,7 +7,13 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import { UserReadDTO, UserUpdateDTO } from '../../../types/types'
-import { IconButton } from '@mui/material'
+import {
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent
+} from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
 import { getAllUsers, UpdatUser } from '@/app/redux/slices/userSlice'
@@ -44,6 +50,11 @@ export default function UserEditDialog ({ user }: { user: UserReadDTO }) {
     }))
   }
 
+  const handleSelectChange = (event: SelectChangeEvent) => {
+    const { name, value } = event.target
+    setUserToUpdate(prev => ({ ...prev, [name]: value }))
+  }
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     // const formData = new FormData(event.currentTarget)
@@ -51,7 +62,7 @@ export default function UserEditDialog ({ user }: { user: UserReadDTO }) {
     // // const email = formJson.email
     // console.log(formJson)
     dispatch(UpdatUser(userToUpdate)).then(() => {
-      if (userApi.status === 'idle') {
+      if (userApi.status === 'succeeded') {
         toast.success('User updated successfully', {
           position: 'bottom-left',
           autoClose: 5000,
@@ -66,19 +77,18 @@ export default function UserEditDialog ({ user }: { user: UserReadDTO }) {
       }
 
       if (userApi.status === 'succeeded') {
-  toast.success('User updated successfully', {
-    position: 'bottom-left',
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: 'light'
-  })
-  dispatch(getAllUsers())
-}
-
+        toast.success('User updated successfully', {
+          position: 'bottom-left',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light'
+        })
+        dispatch(getAllUsers())
+      }
 
       if (userApi.status === 'failed') {
         toast.error('Failed to update user', {
@@ -158,7 +168,7 @@ export default function UserEditDialog ({ user }: { user: UserReadDTO }) {
               onChange={handleChange}
             />
 
-            <TextField
+            {/* <TextField
               required
               margin='dense'
               id='role'
@@ -169,7 +179,19 @@ export default function UserEditDialog ({ user }: { user: UserReadDTO }) {
               variant='standard'
               value={userToUpdate.role}
               onChange={handleChange}
-            />
+            /> */}
+
+            <InputLabel id='demo-simple-select-label'>Role</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              value={userToUpdate.role}
+              label='Role'
+              onChange={handleSelectChange}
+            >
+              <MenuItem value={'Studnet'}>Studnet</MenuItem>
+              <MenuItem value={'Teacher'}>Teacher</MenuItem>
+            </Select>
             <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>
               <Button type='submit'>Update</Button>

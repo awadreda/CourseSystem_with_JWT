@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { UserLoginDTO } from '../../../../types/types'
+import { UserLoginDTO, UserRegisterDTO } from '../../../../types/types'
 
 const api = axios.create({
   baseURL: 'http://localhost:5174/api',
@@ -31,18 +31,20 @@ export const LoginApi = async ({
   }
 }
 
-
 export const RegisterApi = async ({
   userToRegister
 }: {
-  userToRegister: UserLoginDTO
+  userToRegister: UserRegisterDTO
 }) => {
   try {
     const response = await api.post(
       `/Auth/Register`,
       {
+        firstName: userToRegister.firstName,
+        lastName: userToRegister.lastName,
         email: userToRegister.email,
-        password: userToRegister.password
+        password: userToRegister.password,
+        role: userToRegister.role
       },
       {
         headers: {
@@ -57,4 +59,3 @@ export const RegisterApi = async ({
     throw error
   }
 }
-
