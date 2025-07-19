@@ -12,7 +12,7 @@ interface studentState {
   students: StudentReadDTO[];
   status: 'loading' | 'succeeded' | 'failed';
   errors: string | null;
-  student: StudentReadDTO;
+  student: StudentReadDTO ;
   CurrentStudent: StudentReadDTO | null;
 }
 
@@ -24,13 +24,12 @@ const initialState: studentState = {
     studentID: '',
     gpa: 0,
     courses: null,
-    user: {
-      userID: '',
+   
       firstName: '',
       lastName: '',
       email: '',
       role: ''
-    }
+    
   },
   CurrentStudent: null
 };
@@ -66,6 +65,21 @@ export const getStudentByID = createAsyncThunk(
   } 
 
 );
+
+
+export const getStudentByIdForUpdate = createAsyncThunk(
+  `/Student/GetStudentByIdForUpdate`,
+  async (id: string) => {
+    const response = await getStudentByIdApi(id);
+    if (!response) {
+      throw new Error('Failed to fetch student for update');
+    }
+    if (response.errors) {
+      throw new Error(response.errors);
+    }
+    return response;
+  }
+);  
 
 
 export const getStudentByEmail = createAsyncThunk(
@@ -140,6 +154,18 @@ export const studentSlice = createSlice({
         state.status = 'failed';
         state.errors = action.error.message || 'Failed to fetch student';
       })  
+      // Handle the getStudentByIdForUpdate actions
+      .addCase(getStudentByIdForUpdate.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(getStudentByIdForUpdate.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.student = action.payload;
+      })
+      .addCase(getStudentByIdForUpdate.rejected, (state, action) => {
+        state.status = 'failed';
+        state.errors = action.error.message || 'Failed to fetch student for update';
+      })
 
       // Handle the getStudentByEmail actions
       .addCase(getStudentByEmail.pending, state => {

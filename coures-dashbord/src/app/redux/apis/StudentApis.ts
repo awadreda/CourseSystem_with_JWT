@@ -40,6 +40,20 @@ export const getStudentByIdApi = async (id: string) => {
   }
 }
 
+export const getStudentByIdForUpdateApi = async (id: string) => {
+  try {
+    const response = await api.get(`/Student/GetStudentByIdForUpdate/${id}`, {
+      headers: {      
+        'Content-Type': 'application/json', 
+        Accept: 'text/plain'
+      }
+    })
+    return response.data  
+  } catch (error) {
+    console.error(error)
+    throw error
+  } 
+}
 
 
 export const getStudentByEmailApi = async (email: string) => {  

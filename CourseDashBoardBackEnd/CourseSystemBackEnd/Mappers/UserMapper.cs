@@ -37,6 +37,7 @@ public static class UserMapper
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email,
+            Password = user.Password, // Optional, can be null
             Role = user.Role,
         };
     }

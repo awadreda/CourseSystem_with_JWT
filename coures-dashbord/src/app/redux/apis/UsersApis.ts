@@ -42,6 +42,21 @@ export const getUserByIdApi = async (id: string) => {
   }
 }
 
+export const getUserByIdForUpdateApi = async (id: string) => {
+  try {
+    const response = await api.get(`/User/GetUserByIdForUpdate/${id}`, {
+      headers: {      
+        'Content-Type': 'application/json', 
+        Accept: 'text/plain'
+      }
+    })
+    return response.data    
+  } catch (error) {
+    console.error(error)
+  
+  }
+}
+
 export const getUserByEmailApi = async (email: string) => {
   try {
     const response = await api.get(`/User/GetUserByEmail/${email}`, {

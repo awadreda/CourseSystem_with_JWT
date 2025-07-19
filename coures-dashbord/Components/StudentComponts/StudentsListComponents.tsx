@@ -19,6 +19,7 @@ import { CircularProgress } from '@mui/material'
 import { StudentReadDTO, UserReadDTO } from '../../types/types'
 import { getAllStudents } from '@/app/redux/slices/studentSlice'
 import StudentInfoDialog from './StudentInfoDialog'
+import StudentDeleteDialog from './StudentDeleteDialog'
 // import { UserReadDTO } from '../../types/types'
 
 interface Column {
@@ -107,7 +108,7 @@ export default function StudentsListComponent () {
       <Paper style={{ width: '100%' }}>
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label='sticky table'>
-            <TableHead  sx={{ position: 'sticky', top: 0 }} >
+            <TableHead  sx={{ position: 'sticky', top: 0  ,zIndex: 1}} >
               <TableRow>
                 {columns.map(column => (
                   <TableCell
@@ -143,7 +144,7 @@ export default function StudentsListComponent () {
                             <div className='flex gap-2'>
                              <StudentInfoDialog student={student} />
                                {/* <StudentEditDialog student={student} /> */}
-                               {/* <StudentDeleteDialog student={student} /> */}
+                               <StudentDeleteDialog student={student} />
                             </div> 
                           )
                           } else {

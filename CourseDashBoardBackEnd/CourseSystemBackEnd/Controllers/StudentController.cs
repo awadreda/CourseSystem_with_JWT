@@ -54,6 +54,24 @@ namespace CourseSystemBackEnd.Controllers
             return Ok(student.ToStudentReadDTO());
         }
 
+        [HttpGet("GetStudentByIdForUpdate/{studentId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> GetStudentByIdForUpdate(Guid studentId)
+        {
+            if (studentId == Guid.Empty)
+            {
+                return BadRequest("Invalid student ID.");
+            }
+            var student = await _studentRepository.GetStudentByIdAsync(studentId);
+            if (student == null)
+            {
+                return NotFound("Student not found.");
+            }
+            return Ok(student.ToStudentUpdateDTO());
+        }
+
         [HttpGet("GetStudentByEmail/{email}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -102,7 +120,7 @@ namespace CourseSystemBackEnd.Controllers
             return Ok(updatedStudent.ToStudentReadDTO());
         }
 
-               [HttpDelete("DeleteStudent/{studentId}")]
+        [HttpDelete("DeleteStudent/{studentId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

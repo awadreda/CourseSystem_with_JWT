@@ -6,6 +6,7 @@ import {
   getAllUsersApi,
   getUserByEmailApi,
   getUserByIdApi,
+  getUserByIdForUpdateApi,
   UpdateUserApi
 } from '../apis/UsersApis'
 
@@ -52,6 +53,22 @@ export const getUserByID = createAsyncThunk(
     return response
   }
 )
+
+export const getUserByIdForUpdate = createAsyncThunk(
+  `/User/GetUserByIdForUpdate`,
+  async (id: string) => {
+    const response = await getUserByIdForUpdateApi(id)
+    if (!response) {
+      throw new Error('Failed to fetch user for update')
+    }
+    if (response.errors) {  
+      throw new Error(response.errors)
+    }
+    return response
+  }
+)
+
+
 
 export const getUserByEmail = createAsyncThunk(
   `/User/GetUserByEmail`,
@@ -109,6 +126,21 @@ const UserSlice = createSlice({
         state.status = 'failed'
         state.errors = action.error.message || 'Faild to fetch user'
       })
+      // handle getuserbyidforupdate
+
+      .addCase(getUserByIdForUpdate.pending, state => {
+        state.status = 'loading'  
+
+      })
+      .addCase(getUserByIdForUpdate.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        state.user = action.payload
+      })
+      .addCase(getUserByIdForUpdate.rejected, (state, action) => {
+        state.status = 'failed'
+        state.errors = action.error.message || 'Faild to fetch user for update'
+      })
+
       // handle getuserbyemail
 
       .addCase(getUserByEmail.pending, state => {
