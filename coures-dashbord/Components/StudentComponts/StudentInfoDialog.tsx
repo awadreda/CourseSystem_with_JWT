@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { useEffect } from 'react'
 import {
   Button,
   Dialog,
@@ -16,35 +15,9 @@ import InfoIcon from '@mui/icons-material/Info'
 import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles'
 import CloseIcon from '@mui/icons-material/Close'
-import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
-import { useDispatch } from 'react-redux'
-import {
-  getAllUsers,
-  getUserByID,
-  UpdatUser
-} from '@/app/redux/slices/userSlice'
 import { StudentReadDTO } from '../../types/types'
 
-// نوع البيانات (UserReadDTO)
-export interface UserReadDTO {
-  userID: string
-  firstName: string
-  lastName: string
-  email: string
-  role: string
-}
 
-// دي بيانات تجريبية
-const user: StudentReadDTO = {
-  studentID: 'e3b0c442-98fc-1fcf-bc4c-000000000001',
-  firstName: 'Ahmed',
-  lastName: 'Samir',
-  email: 'ahmed.samir@example.com',
-  gpa: 3.5,
-  role: 'Student',
-  courses: ['course1', 'course2']
-
-}
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -55,9 +28,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   }
 }))
 
-export default function StudentInfoDialog({user}:{user:UserReadDTO}) {
+export default function StudentInfoDialog({student}:{student:StudentReadDTO}) {
   const [open, setOpen] = React.useState(false)
-  const userApi = useAppSelector(state => state.user)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -81,7 +53,7 @@ export default function StudentInfoDialog({user}:{user:UserReadDTO}) {
         maxWidth='sm'
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id='customized-dialog-title'>
-          User Information
+          Student Information
         </DialogTitle>
         <IconButton
           aria-label='close'
@@ -102,24 +74,24 @@ export default function StudentInfoDialog({user}:{user:UserReadDTO}) {
               <Grid container spacing={2} alignItems='center'>
                 <Grid>
                   <Avatar sx={{ width: 64, height: 64 }}>
-                    {user.firstName[0]}
+                    {student.firstName[0]}
                   </Avatar>
                 </Grid>
                 <Grid>
                   <Typography variant='h6'>
-                    {user.firstName} {user.lastName}
+                    {student.firstName} {student.lastName}
                   </Typography>
                   <Typography color='text.secondary'>
-                    {user.role}
+                    {student.gpa} GPA
                   </Typography>
                 </Grid>
               </Grid>
 
               <Typography sx={{ mt: 2 }}>
-                <strong>Email:</strong> {user.email}
+                <strong>Email:</strong> {student.email}
               </Typography>
               <Typography>
-                <strong>User ID:</strong> {user.userID}
+                <strong>User ID:</strong> {student.studentID}
               </Typography>
             </CardContent>
           </Card>

@@ -18,6 +18,7 @@ import { getAllUsers } from '@/app/redux/slices/userSlice'
 import { CircularProgress } from '@mui/material'
 import { StudentReadDTO, UserReadDTO } from '../../types/types'
 import { getAllStudents } from '@/app/redux/slices/studentSlice'
+import StudentInfoDialog from './StudentInfoDialog'
 // import { UserReadDTO } from '../../types/types'
 
 interface Column {
@@ -138,13 +139,13 @@ export default function StudentsListComponent () {
                           ? `${student.firstName} ${student.lastName}`
                           : 'N/A'                        
                         } else if (column.id === 'Options') {
-                          // value = (
-                            // <div className='flex gap-2'>
-                             //<StudentInfoDialog user={user} />
-                              // <UserEditDialog user={user} />
-                              // <UserDeleteDialog user={user} />
-                            // </div>
-                            // )
+                          value = (
+                            <div className='flex gap-2'>
+                             <StudentInfoDialog student={student} />
+                               {/* <StudentEditDialog student={student} /> */}
+                               {/* <StudentDeleteDialog student={student} /> */}
+                            </div> 
+                          )
                           } else {
                             value = student[column.id]
                           }
