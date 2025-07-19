@@ -54,9 +54,12 @@ export interface StudentCreateDTO {
 
 export interface StudentReadDTO {
   studentID: string; // uuid
+  firstName: string
+  lastName: string
+  email: string
+  role: string// UserReadDTO object
   gpa: number;
   courses?: string[] | null; // Array of course IDs or null if no courses
-  user: UserReadDTO; // UserReadDTO object
 }
 export interface StudentUpdateDTO {
   studentID: string; // uuid

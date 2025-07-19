@@ -38,7 +38,7 @@ const initialState: studentState = {
 
 
 
-export const getAllStudentsApiThunk = createAsyncThunk(
+export const getAllStudents = createAsyncThunk(
   `/Student/GetAllStudents`,
   async () => {
     const response = await getAllStudentsApi();
@@ -115,14 +115,14 @@ export const studentSlice = createSlice({
     builder
 
     // Handle the getAllStudentsApiThunk actions
-      .addCase(getAllStudentsApiThunk.pending, state => {
+      .addCase(getAllStudents.pending, state => {
         state.status = 'loading';
       })
-      .addCase(getAllStudentsApiThunk.fulfilled, (state, action) => {
+      .addCase(getAllStudents.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.students = action.payload;
       })
-      .addCase(getAllStudentsApiThunk.rejected, (state, action) => {
+      .addCase(getAllStudents.rejected, (state, action) => {
         state.status = 'failed';
         state.errors = action.error.message || 'Failed to fetch students';
       })

@@ -8,6 +8,7 @@ import UserEditDialog from '../../../../../Components/UsersComponents/Dialogs/Us
 import AddNewUserDialog from '../../../../../Components/UsersComponents/Dialogs/AddNewUserDialog'
 import { Button } from '@mui/material'
 import { toast } from 'react-toastify'
+import StudentsListComponent from '../../../../../Components/StudentComponts/StudentsListComponents'
 
 type Props = {}
 
@@ -27,9 +28,9 @@ const StudentsList = (props: Props) => {
   }
   return (
     <div className='flex p-3 w-full gap-5  flex-col justify-center bg-black'>
-      <h2 className=' mt-10  text-4xl font-bold'>UsersList</h2>
+      <h2 className=' mt-10  text-4xl font-bold'>StudentList</h2>
       <div className='flex justify-end pr-2 w-full'>
-        <AddNewUserDialog />
+        {/* <AddNewUserDialog />
         <Button
           variant='contained'
           color='primary'
@@ -37,10 +38,10 @@ const StudentsList = (props: Props) => {
           title='lol'
         >
           click me
-        </Button>
+        </Button> */}
       </div>
 
-      <UsersListComponent />
+      <StudentsListComponent />
     </div>
   )
 }
