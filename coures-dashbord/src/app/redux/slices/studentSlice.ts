@@ -108,6 +108,14 @@ export const UpdateStudent = createAsyncThunk(
   } 
 );
 
+export const UpdateBasicStudentInfo = createAsyncThunk(
+  `/Student/UpdateBasicStudent`,
+  async (student: StudentUpdateDTO) => {  
+    const response = await UpdateStudentApi(student);
+    return response;
+  } 
+)
+
 export const DeleteStudent = createAsyncThunk(
   `/Student/DeleteStudent`,
   async (studentID: string) => {  
@@ -207,6 +215,19 @@ export const studentSlice = createSlice({
         state.status = 'failed';
         state.errors = action.error.message || 'Failed to update student';
       })
+        // Handle the UpdateBasicStudentInfo actions
+      .addCase(UpdateBasicStudentInfo.pending, state => {
+        state.status = 'loading';
+      })      
+      .addCase(UpdateBasicStudentInfo.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.student = action.payload;
+      })
+      .addCase(UpdateBasicStudentInfo.rejected, (state, action) => {
+        state.status = 'failed';
+        state.errors = action.error.message || 'Failed to update student';
+      })
+
 
       // Handle the DeleteStudent actions
       .addCase(DeleteStudent.pending, state => {

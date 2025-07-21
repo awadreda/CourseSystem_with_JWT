@@ -88,6 +88,16 @@ export const UpdatUser = createAsyncThunk(
   }
 )
 
+
+export const UpdateBasicUserInfo = createAsyncThunk(
+  `/User/UpdateBasicUser`,
+  async (userUpdateDTO: UserUpdateDTO) => {
+    const response = await UpdateUserApi(userUpdateDTO)
+
+    return response
+  }
+)
+
 export const deleteUser = createAsyncThunk(
   `/User;/DeleteUser`,
   async (id: string) => {
@@ -95,7 +105,9 @@ export const deleteUser = createAsyncThunk(
 
     return response
   }
-)
+)   
+
+
 
 const UserSlice = createSlice({
   name: 'users',
@@ -166,6 +178,18 @@ const UserSlice = createSlice({
         state.status = 'failed'
         state.errors = action.error.message || 'Faild to fetch user'
       })
+      // handle updateBasic user
+      .addCase(UpdateBasicUserInfo.pending, state => {
+        state.status = 'loading'
+      })
+      .addCase(UpdateBasicUserInfo.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        state.user = action.payload
+      })
+      .addCase(UpdateBasicUserInfo.rejected, (state, action) => {
+        state.status = 'failed'
+        state.errors = action.error.message || 'Faild to fetch user'
+      })
 
       // handle delete user
       .addCase(deleteUser.pending, state => {
@@ -182,4 +206,5 @@ const UserSlice = createSlice({
   }
 })
 
-export default UserSlice.reducer
+
+export default UserSlice.reducer    

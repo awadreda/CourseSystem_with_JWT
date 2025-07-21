@@ -1,4 +1,4 @@
-import { UserUpdateDTO } from '../../../../types/types'
+import { UserUpdateDTO, UserReadDTO } from '../../../../types/types';
 import axios from 'axios'
 
 const api = axios.create({
@@ -75,6 +75,21 @@ export const getUserByEmailApi = async (email: string) => {
 export const UpdateUserApi = async (userUpdateDTO: UserUpdateDTO) => {
   try {
     const response = await api.put(`/User/UpdateUser`, userUpdateDTO, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'text/plain'
+      }
+    })
+    return response.data
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const updateUserBasicInfoApi = async (userReadDTO: UserReadDTO) => {
+  try {
+    const response = await api.put(`/User/UpdateUserBasicInfo`, userReadDTO, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'text/plain'

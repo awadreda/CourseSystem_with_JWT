@@ -235,17 +235,21 @@ public class StudentRerepository : IStudentRepository
 
     public async Task<bool> UpdateBasicInfoAsync(StudentReadDto student)
     {
-        var studentToUpdate = await _schoolDB.Students.FirstOrDefaultAsync(s =>
-            s.StudentID == student.StudentID
-        );
+        var studentToUpdate = await _schoolDB
+            .Students.Include(s => s.User)
+            .FirstOrDefaultAsync(s => s.StudentID == student.StudentID);
         if (studentToUpdate == null)
         {
             return false;
         }
 
-        studentToUpdate.User.FirstName = student.FirstName;
-        studentToUpdate.User.LastName = student.LastName;
-        studentToUpdate.User.Email = student.Email;
+        var existingUser = studentToUpdate.User;
+
+        existingUser.FirstName = student.FirstName;
+        existingUser.LastName = student.LastName;
+        existingUser.Email = student.Email;
+        _schoolDB.Users.Update(existingUser);
+
         studentToUpdate.GPA = student.GPA;
         _schoolDB.Update(studentToUpdate);
         await _schoolDB.SaveChangesAsync();

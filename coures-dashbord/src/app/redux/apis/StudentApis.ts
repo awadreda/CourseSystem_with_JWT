@@ -1,5 +1,7 @@
-import { StudentCreateDTO, StudentUpdateDTO, UserUpdateDTO, UserCreateDTO } from '../../../../types/types';
+import { StudentCreateDTO, StudentUpdateDTO, UserUpdateDTO, UserCreateDTO, UserReadDTO, StudentReadDTO } from '../../../../types/types';
 import axios from 'axios'
+import { updateUserBasicInfoApi } from './UsersApis';
+import { UpdateStudent } from '../slices/studentSlice';
 
 const api = axios.create({
   baseURL: 'http://localhost:5174/api',
@@ -93,6 +95,35 @@ export const UpdateStudentApi = async (studentUpdateDTO: StudentUpdateDTO) => {
   }
 }
 
+
+export const UpdateStudentBasicINfoApi = async(studentUpdate:StudentReadDTO) => {
+  try {
+    const response = await api.put(
+      `/Student/UpdateStudentBasicInfo`,
+      {
+        studentID: studentUpdate.studentID,
+       
+        firstName: studentUpdate.firstName,
+        lastName: studentUpdate.lastName,
+        email: studentUpdate.email,
+        role: studentUpdate.role,
+        
+        gpa: studentUpdate.gpa,
+        
+                  },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'text/plain'
+        }
+      }
+    )
+    return response.data
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+} 
 
 
 export const CreateStudentApi = async (studentCreateDTO: StudentCreateDTO) => {

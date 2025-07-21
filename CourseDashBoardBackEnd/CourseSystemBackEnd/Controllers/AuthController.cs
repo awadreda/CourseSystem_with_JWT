@@ -47,7 +47,7 @@ namespace CourseSystemBackEnd.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<UserReadDTO>> Register(UserRegisterDTo userRegisterDTo)
         {
-            if (await _userRepository.UserExists(userRegisterDTo.Email))
+            if (await _userRepository.UserExistsByEmail(userRegisterDTo.Email))
             {
                 return BadRequest("User Email already exists.");
             }
