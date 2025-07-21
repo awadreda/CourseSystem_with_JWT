@@ -120,6 +120,27 @@ namespace CourseSystemBackEnd.Controllers
             return Ok(updatedStudent.ToStudentReadDTO());
         }
 
+        [HttpPut("UpdateBasicInfo")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> UpdateBasicInfo(
+            [FromBody] StudentReadDto studentUpdateBasicInfoDto
+        )
+        {
+            if (studentUpdateBasicInfoDto == null)
+            {
+                return BadRequest("Student data cannot be null.");
+            }
+
+            var result = await _studentRepository.UpdateBasicInfoAsync(studentUpdateBasicInfoDto);
+            if (!result)
+            {
+                return NotFound("Student not found or update failed.");
+            }
+            return Ok(new { message = "Student basic info updated successfully." });
+        }
+
         [HttpDelete("DeleteStudent/{studentId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

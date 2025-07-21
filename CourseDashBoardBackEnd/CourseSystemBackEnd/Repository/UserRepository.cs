@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CourseSystemBackEnd.Data;
+using CourseSystemBackEnd.DTOs;
 using CourseSystemBackEnd.Interfaces;
 using CourseSystemBackEnd.Models;
 using CourseSystemBackEnd.Services;
@@ -94,6 +95,23 @@ public class UserRepository : IUserRepository
         return null!;
     }
 
+    public async Task<bool> UpdateBaskInfoAsync(UserReadDTO user)
+    {
+        var userToUpdate = await _schoolDB.Users.FirstOrDefaultAsync(u => u.UserID == user.UserID);
+        if (userToUpdate == null)
+        {
+            return false;
+        }
+
+        userToUpdate.FirstName = user.FirstName;
+        userToUpdate.LastName = user.LastName;
+        userToUpdate.Email = user.Email;
+        userToUpdate.Role = user.Role;
+        _schoolDB.Update(userToUpdate);
+        await _schoolDB.SaveChangesAsync();
+        return true;
+    }
+
     public async Task<User> UpdateUserAsync(User user)
     {
         if (user == null || user.UserID == Guid.Empty)
@@ -127,8 +145,13 @@ public class UserRepository : IUserRepository
         return existingUser.Result;
     }
 
-    public Task<bool> UserExists(string email)
+    public async Task<bool> UserExistsByEmail(string email)
     {
-        return _schoolDB.Users.AnyAsync(u => u.Email == email);
+        return await _schoolDB.Users.AnyAsync(u => u.Email == email);
+    }
+
+    public async Task<bool> UserExistsById(Guid userId)
+    {
+        return await _schoolDB.Users.AnyAsync(u => u.UserID == userId);
     }
 }

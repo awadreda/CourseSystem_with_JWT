@@ -152,6 +152,36 @@ namespace CourseSystemBackEnd.Controllers
             return Ok(updatedUser.toUserReadDTO());
         }
 
+        [HttpPut("UpdateUserBasicInfo")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> UpdateUserBasicInfo(
+            [FromBody] UserReadDTO userUpdateBasicInfoDTO
+        )
+        {
+            if (userUpdateBasicInfoDTO == null || userUpdateBasicInfoDTO.UserID == Guid.Empty)
+            {
+                return BadRequest("User cannot be null and must have a valid ID.");
+            }
+
+            if (_userRepository.UserExistsById(userUpdateBasicInfoDTO.UserID).Result == false)
+            {
+                return NotFound("User not found.");
+            }
+
+            bool result = await _userRepository.UpdateBaskInfoAsync(userUpdateBasicInfoDTO);
+            if (!result)
+            {
+                return StatusCode(
+                    StatusCodes.Status500InternalServerError,
+                    "Error updating user basic info."
+                );
+            }
+            return Ok(userUpdateBasicInfoDTO);
+        }
+
         [HttpDelete("DeleteUser/{userId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

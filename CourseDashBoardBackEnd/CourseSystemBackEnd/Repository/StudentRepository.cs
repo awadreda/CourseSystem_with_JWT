@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CourseSystemBackEnd.Data;
 using CourseSystemBackEnd.DTOs;
+using CourseSystemBackEnd.DTOs.StudentDTOs;
 using CourseSystemBackEnd.Interfaces;
 using CourseSystemBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
@@ -230,5 +231,24 @@ public class StudentRerepository : IStudentRepository
         _schoolDB.Students.Update(existingStudent);
         await _schoolDB.SaveChangesAsync();
         return existingStudent;
+    }
+
+    public async Task<bool> UpdateBasicInfoAsync(StudentReadDto student)
+    {
+        var studentToUpdate = await _schoolDB.Students.FirstOrDefaultAsync(s =>
+            s.StudentID == student.StudentID
+        );
+        if (studentToUpdate == null)
+        {
+            return false;
+        }
+
+        studentToUpdate.User.FirstName = student.FirstName;
+        studentToUpdate.User.LastName = student.LastName;
+        studentToUpdate.User.Email = student.Email;
+        studentToUpdate.GPA = student.GPA;
+        _schoolDB.Update(studentToUpdate);
+        await _schoolDB.SaveChangesAsync();
+        return true;
     }
 }

@@ -1,6 +1,8 @@
-### Make an API for getting information to UpdateApi
+### API for Retrieving Information for Update
 
-For:
-- User
-- Student
-- Teacher
+Entities:
+
+- User: Completed
+- Student: Completed
+- Teacher: Completed
+

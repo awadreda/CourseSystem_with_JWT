@@ -1,7 +1,7 @@
 import { StudentCreateDTO, StudentReadDTO, StudentUpdateDTO } from "../../../../types/types";
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { CreateStudentApi, getAllStudentsApi, getStudentByEmailApi, getStudentByIdApi, UpdateStudentApi, DeleteStudentApi } from '../apis/StudentApis';
+import { CreateStudentApi, getAllStudentsApi, getStudentByEmailApi, getStudentByIdApi, UpdateStudentApi, DeleteStudentApi, getStudentByIdForUpdateApi } from '../apis/StudentApis';
 import { get } from 'http';
 
 
@@ -10,9 +10,9 @@ import { get } from 'http';
 
 interface studentState {
   students: StudentReadDTO[];
-  status: 'loading' | 'succeeded' | 'failed';
+  status: 'loading' | 'succeeded' | 'failed' | 'idle';
   errors: string | null;
-  student: StudentReadDTO ;
+  student: StudentReadDTO  | StudentUpdateDTO;
   CurrentStudent: StudentReadDTO | null;
 }
 
@@ -70,14 +70,14 @@ export const getStudentByID = createAsyncThunk(
 export const getStudentByIdForUpdate = createAsyncThunk(
   `/Student/GetStudentByIdForUpdate`,
   async (id: string) => {
-    const response = await getStudentByIdApi(id);
+    const response = await getStudentByIdForUpdateApi(id);
     if (!response) {
       throw new Error('Failed to fetch student for update');
     }
     if (response.errors) {
       throw new Error(response.errors);
     }
-    return response;
+    return response as StudentUpdateDTO;
   }
 );  
 
@@ -160,7 +160,7 @@ export const studentSlice = createSlice({
       })
       .addCase(getStudentByIdForUpdate.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.student = action.payload;
+        state.student = action.payload ;
       })
       .addCase(getStudentByIdForUpdate.rejected, (state, action) => {
         state.status = 'failed';

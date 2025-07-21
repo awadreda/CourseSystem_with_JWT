@@ -20,6 +20,7 @@ import { StudentReadDTO, UserReadDTO } from '../../types/types'
 import { getAllStudents } from '@/app/redux/slices/studentSlice'
 import StudentInfoDialog from './StudentInfoDialog'
 import StudentDeleteDialog from './StudentDeleteDialog'
+import StudentEditDialog from './StudentEditDialog'
 // import { UserReadDTO } from '../../types/types'
 
 interface Column {
@@ -82,14 +83,14 @@ export default function StudentsListComponent () {
   }
 
   useEffect(() => {
-    if (StudentsApi.status === 'succeeded' ) 
-    {
+    
+    
       dispatch(getAllStudents())
       .then(() => {
       
         console.log('Students in student list component' , StudentsApi.students)
       } )
-    }
+    
 
   }, [])
 
@@ -143,7 +144,7 @@ export default function StudentsListComponent () {
                           value = (
                             <div className='flex gap-2'>
                              <StudentInfoDialog student={student} />
-                               {/* <StudentEditDialog student={student} /> */}
+                               <StudentEditDialog student={student} />
                                <StudentDeleteDialog student={student} />
                             </div> 
                           )
