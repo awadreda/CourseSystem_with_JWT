@@ -78,3 +78,48 @@ export interface StudentUpdateBasicInfoDTO {
 
 }
 
+
+
+
+
+type User = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  role: string;
+  courses?: string[] | null;
+};
+
+// TeacherUpdateBasicInfoDto
+ export type TeacherUpdateBasicInfoDto = {
+  teacherID: string; // UUID
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+};
+
+// TeacherUpdateDTO
+export type TeacherDTO = {
+  user: {
+    userID: string; // UUID
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: string;
+    courses?: string[] | null;
+  };
+};
+
+
+
+
+
+
+
+
+
+
+
+
