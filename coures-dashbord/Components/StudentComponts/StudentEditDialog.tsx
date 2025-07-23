@@ -19,7 +19,7 @@ import { getAllUsers, UpdatUser } from '@/app/redux/slices/userSlice'
 import { toast } from 'react-toastify'
 import { get } from 'http'
 import { StudentReadDTO, StudentUpdateBasicInfoDTO, StudentUpdateDTO } from '../../types/types'
-import { getStudentByIdForUpdate, UpdateBasicStudentInfo, UpdateStudent } from '@/app/redux/slices/studentSlice'
+import { getAllStudents, getStudentByIdForUpdate, UpdateBasicStudentInfo, UpdateStudent } from '@/app/redux/slices/studentSlice'
 import { current } from '@reduxjs/toolkit'
 import { UpdateStudentBasicINfoApi } from '@/app/redux/apis/StudentApis'
 
@@ -126,7 +126,7 @@ export default function StudentEditDialog ({ student }: { student: StudentReadDT
           progress: undefined,
           theme: 'light'
         })
-        dispatch(getAllUsers())
+        dispatch(getAllStudents())
       }
 
       // if (studentApi.status === 'succeeded') {

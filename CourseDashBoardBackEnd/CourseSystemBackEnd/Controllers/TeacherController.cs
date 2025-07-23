@@ -113,8 +113,8 @@ namespace CourseSystemBackEnd.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateTeacher(
-            [FromBody] TeacherUpdateDTO teacherUpdateDTO,
-            Guid teacherId
+            Guid teacherId,
+            [FromBody] TeacherUpdateDTO teacherUpdateDTO
         )
         {
             if (teacherUpdateDTO == null)
@@ -137,6 +137,40 @@ namespace CourseSystemBackEnd.Controllers
                 return BadRequest("Failed to update teacher.");
             }
             return Ok(updatedTeacher.ToTeacherReadDTO());
+        }
+
+        [HttpPut("UpdateTeacherBasicInfo")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateTeacherBasicInfo(
+            Guid teacherId,
+            [FromBody] TeacherUpdateBasicInfoDto teacherUpdateBasicInfoDTO
+        )
+        {
+            if (teacherUpdateBasicInfoDTO == null)
+            {
+                return BadRequest("Teacher data is null.");
+            }
+
+            var existingTeacher = await _teacherRepository.GetTeacherByIdAsync(teacherId);
+            if (!(_teacherRepository.IsTeacherExistsAsync(teacherId).Result))
+            {
+                return NotFound("Teacher not found.");
+            }
+
+            var TeacherFromUPdatedDTO = teacherUpdateBasicInfoDTO;
+            TeacherFromUPdatedDTO.TeacherID = teacherId;
+            var result = await _teacherRepository.UpdateTeacherBasicInfoAsync(
+                TeacherFromUPdatedDTO
+            );
+            if (!result)
+            {
+                return BadRequest("Failed to update teacher.");
+            }
+            return Ok(new { message = "Teacher basic info updated successfully." });
         }
 
         [HttpDelete("DeleteTeacher,{teacherId}")]

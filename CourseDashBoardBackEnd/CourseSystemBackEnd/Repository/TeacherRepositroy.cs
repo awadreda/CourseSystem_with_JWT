@@ -1,4 +1,5 @@
 using CourseSystemBackEnd.Data;
+using CourseSystemBackEnd.DTOs.TeacherDTOs;
 using CourseSystemBackEnd.Interfaces;
 using CourseSystemBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
@@ -184,5 +185,30 @@ public class TeacherRepository : ITeacherRepository
         _schoolDB.Update(existingTeacher);
         await _schoolDB.SaveChangesAsync();
         return existingTeacher;
+    }
+
+    public async Task<bool> UpdateTeacherBasicInfoAsync(
+        TeacherUpdateBasicInfoDto teacherUpdateBasicInfoDto
+    )
+    {
+        var teacherToUpdate = await _schoolDB
+            .Teachers.Include(t => t.User)
+            .FirstOrDefaultAsync(t => t.TeacherID == teacherUpdateBasicInfoDto.TeacherID);
+
+
+        if (teacherToUpdate == null)
+        {
+            return false; // Teacher not found
+        }
+
+        var user = teacherToUpdate.User;
+
+        user.FirstName = teacherUpdateBasicInfoDto.FirstName;
+        user.LastName = teacherUpdateBasicInfoDto.LastName;
+        user.Email = teacherUpdateBasicInfoDto.Email;
+        user.Role = teacherUpdateBasicInfoDto.Role;
+        _schoolDB.Update(user);
+        await _schoolDB.SaveChangesAsync();
+        return true;
     }
 }
