@@ -84,13 +84,16 @@ export default function StudentsListComponent () {
 
   useEffect(() => {
     
-    
+    if(StudentsApi.status === 'succeeded')
+    {
+
       dispatch(getAllStudents())
       .then(() => {
-      
+        
         console.log('Students in student list component' , StudentsApi.students)
       } )
-    
+      
+    }
 
   }, [])
 

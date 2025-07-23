@@ -18,71 +18,69 @@ import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
 import { getAllUsers, UpdatUser } from '@/app/redux/slices/userSlice'
 import { toast } from 'react-toastify'
 import { get } from 'http'
-import { StudentReadDTO, StudentUpdateDTO } from '../../types/types'
-import { getStudentByIdForUpdate, UpdateStudent } from '@/app/redux/slices/studentSlice'
+import { StudentReadDTO, StudentUpdateBasicInfoDTO, StudentUpdateDTO } from '../../types/types'
+import { getStudentByIdForUpdate, UpdateBasicStudentInfo, UpdateStudent } from '@/app/redux/slices/studentSlice'
 import { current } from '@reduxjs/toolkit'
+import { UpdateStudentBasicINfoApi } from '@/app/redux/apis/StudentApis'
 
 export default function StudentEditDialog ({ student }: { student: StudentReadDTO }) {
   const [open, setOpen] = React.useState(false)
 
   const dispatch = useAppDispatch()
   const studentApi = useAppSelector(state => state.student)
-  const CurrentStudent = studentApi.CurrentStudent
-  const [studetnToUpdate, setstudetnToUpdate] = React.useState<StudentUpdateDTO>({
+  // const CurrentStudent = studentApi.CurrentStudent
+  const [studetnToUpdate, setstudetnToUpdate] = React.useState<StudentUpdateBasicInfoDTO>({
   studentID: student.studentID,
       gpa: student.gpa,
-    UserUpdateDTO: {
 
-      userID: "",
-    firstName: CurrentStudent?.firstName || '',
-      lastName: CurrentStudent?.lastName || '',
-      email: CurrentStudent?.email  || '',
-      password: '', // Password is not required for update
-      role: CurrentStudent?.role  || ''
-    }
+      firstName: student.firstName,
+      lastName: student.lastName,
+      email: student.email,
+      role: student.role ,
+    
   })
   
-    React.useEffect(() => {
+  //   React.useEffect(() => {
 
-      if( open && student.studentID)
-      {
+  //     if( open && student.studentID)
+  //     {
 
-        dispatch(getStudentByIdForUpdate(student.studentID)).then((response) => {
-          console.log( "response.payload " , response.payload )
-        const studentPayload = response.payload as {
-          studentID?: string | undefined,
-          gpa: number,
-          user: {
-            userID: string,
-            firstName: string,
-            lastName: string,
-            email: string,
-            password: string,
-            role: string
-          },
-          courses: string[]
-        };
-        setstudetnToUpdate({
-          studentID: studentPayload.studentID ||  '', 
-          gpa: studentPayload.gpa,
-          UserUpdateDTO: {
-            userID: "studentPayload.UserUpdateDTO.userID",
-            firstName: studentPayload.user.firstName,
-            lastName: studentPayload.user.lastName,
-            email: studentPayload.user.email,
-            password: '', // Password is not required for update
-            role: studentPayload.user.role
-          }
-        })
+  //       dispatch(getStudentByIdForUpdate(student.studentID)).then((response) => {
+  //         console.log( "response.payload " , response.payload )
+  //       const studentPayload = response.payload as {
+  //         studentID?: string | undefined,
+  //         gpa: number,
+  //         user: {
+  //           userID: string,
+  //           firstName: string,
+  //           lastName: string,
+  //           email: string,
+  //           password: string,
+  //           role: string
+  //         },
+  //         courses: string[]
+  //       };
+  //       setstudetnToUpdate({
+  //         studentID: studentPayload.studentID ||  '', 
+  //         gpa: studentPayload.gpa,
+  //         UserUpdateDTO: {
+  //           userID: "studentPayload.UserUpdateDTO.userID",
+  //           firstName: studentPayload.user.firstName,
+  //           lastName: studentPayload.user.lastName,
+  //           email: studentPayload.user.email,
+  //           password: '', // Password is not required for update
+  //           role: studentPayload.user.role
+  //         }
+  //       })
         
-      })
-    }
+  //     })
+  //   }
   
-  }, [open        ])
+  // }, [open        ])
 
 
   const handleClickOpen = () => {
-    console.log('OPEN CLICKED') // ✅ للتأكد إن الفنكشن بتتنفذ
+    console.log('OPEN CLICKED') 
 
     setOpen(true)
    
@@ -96,10 +94,7 @@ export default function StudentEditDialog ({ student }: { student: StudentReadDT
     const { name, value } = event.target
     setstudetnToUpdate(prev => ({
       ...prev,
-      UserUpdateDTO: {
-        ...prev.UserUpdateDTO,
-        [name]: value
-      }
+    [name]: value
     }))
   }
 
@@ -114,9 +109,14 @@ export default function StudentEditDialog ({ student }: { student: StudentReadDT
     // const formJson = Object.fromEntries((formData as any).entries())
     // // const email = formJson.email
     // console.log(formJson)
-    dispatch(UpdateStudent(studetnToUpdate)).then(() => {
+    dispatch(UpdateBasicStudentInfo(studetnToUpdate)).then((res) => {
+
+      console.log('Update response:', res)
       if (studentApi.status === 'succeeded') {
+
+        console.log('User updated successfully', studetnToUpdate)
         toast.success('User updated successfully', {
+
           position: 'bottom-left',
           autoClose: 5000,
           hideProgressBar: false,
@@ -129,19 +129,19 @@ export default function StudentEditDialog ({ student }: { student: StudentReadDT
         dispatch(getAllUsers())
       }
 
-      if (studentApi.status === 'succeeded') {
-        toast.success('User updated successfully', {
-          position: 'bottom-left',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light'
-        })
-        dispatch(getAllUsers())
-      }
+      // if (studentApi.status === 'succeeded') {
+      //   toast.success('User updated successfully', {
+      //     position: 'bottom-left',
+      //     autoClose: 5000,
+      //     hideProgressBar: false,
+      //     closeOnClick: true,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //     progress: undefined,
+      //     theme: 'light'
+      //   })
+      //   dispatch(getAllUsers())
+      // }
 
       if (studentApi.status === 'failed') {
         toast.error('Failed to update user', {
@@ -181,7 +181,7 @@ export default function StudentEditDialog ({ student }: { student: StudentReadDT
               type='text'
               fullWidth
               variant='standard'
-              value={studetnToUpdate.UserUpdateDTO.firstName}
+              value={studetnToUpdate.firstName}
               onChange={handleChange}
             />
             <TextField
@@ -193,7 +193,7 @@ export default function StudentEditDialog ({ student }: { student: StudentReadDT
               type='text'
               fullWidth
               variant='standard'
-              value={studetnToUpdate.UserUpdateDTO.lastName}
+              value={studetnToUpdate.lastName}
               onChange={handleChange}
             />
             <TextField
@@ -205,20 +205,21 @@ export default function StudentEditDialog ({ student }: { student: StudentReadDT
               type='email'
               fullWidth
               variant='standard'
-              value={studetnToUpdate.UserUpdateDTO.email}
+              value={studetnToUpdate.email}
               onChange={handleChange}
             />
 
             <TextField
+              required
               margin='dense'
-              id='password'
-              name='password'
-              label='Password (leave blank to keep current password)'
-              type='password'
+              id='gpa'
+              name='gpa'
+              label='GPA'
+              type='number'
               fullWidth
               variant='standard'
-              value={studetnToUpdate.UserUpdateDTO.password}
-              onChange={handleChange}
+              value={studetnToUpdate.gpa}
+              onChange={handleChange} 
             />
 
             {/* <TextField
@@ -238,7 +239,7 @@ export default function StudentEditDialog ({ student }: { student: StudentReadDT
             <Select
               labelId='demo-simple-select-label'
               id='demo-simple-select'
-              value={studetnToUpdate.UserUpdateDTO.role}
+              value={studetnToUpdate.role}
               label='Role'
               onChange={handleSelectChange}
             >

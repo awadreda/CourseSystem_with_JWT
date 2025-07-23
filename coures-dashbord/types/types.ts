@@ -66,3 +66,15 @@ export interface StudentUpdateDTO {
   gpa: number;
   UserUpdateDTO: UserUpdateDTO; // UserUpdateDTO object
 }
+
+export interface StudentUpdateBasicInfoDTO {
+  studentID: string; // uuid
+  firstName: string
+  lastName: string
+  email: string
+  role: string// UserReadDTO object
+  gpa: number;
+  
+
+}
+

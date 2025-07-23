@@ -110,6 +110,7 @@ export const UpdateStudentBasicINfoApi = async(studentUpdate:StudentReadDTO) => 
         
         gpa: studentUpdate.gpa,
         
+        
                   },
       {
         headers: {

@@ -26,6 +26,19 @@ public record StudentReadDto
     public string Role { get; set; } = string.Empty;
 }
 
+public record StudentUpdateBaiscInfoDto
+{
+    public Guid StudentID { get; set; }
+    public double GPA { get; set; }
+
+    // public UserReadDTO User { get; set; } = null!;
+
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Role { get; set; } = string.Empty;
+}
+
 public record StudentUpdateDto
 {
     public double? GPA { get; set; } // Nullable to allow partial updates

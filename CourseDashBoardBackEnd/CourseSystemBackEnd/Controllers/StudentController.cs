@@ -120,12 +120,12 @@ namespace CourseSystemBackEnd.Controllers
             return Ok(updatedStudent.ToStudentReadDTO());
         }
 
-        [HttpPut("UpdateBasicInfo")]
+        [HttpPut("UpdateStudentBasicInfo")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> UpdateBasicInfo(
-            [FromBody] StudentReadDto studentUpdateBasicInfoDto
+            [FromBody] StudentUpdateBaiscInfoDto studentUpdateBasicInfoDto
         )
         {
             if (studentUpdateBasicInfoDto == null)

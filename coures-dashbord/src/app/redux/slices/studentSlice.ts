@@ -1,8 +1,9 @@
 import { StudentCreateDTO, StudentReadDTO, StudentUpdateDTO } from "../../../../types/types";
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { CreateStudentApi, getAllStudentsApi, getStudentByEmailApi, getStudentByIdApi, UpdateStudentApi, DeleteStudentApi, getStudentByIdForUpdateApi } from '../apis/StudentApis';
+import { CreateStudentApi, getAllStudentsApi, getStudentByEmailApi, getStudentByIdApi, UpdateStudentApi, DeleteStudentApi, getStudentByIdForUpdateApi, UpdateStudentBasicINfoApi } from '../apis/StudentApis';
 import { get } from 'http';
+import { updateUserBasicInfoApi } from "../apis/UsersApis";
 
 
 
@@ -109,9 +110,9 @@ export const UpdateStudent = createAsyncThunk(
 );
 
 export const UpdateBasicStudentInfo = createAsyncThunk(
-  `/Student/UpdateBasicStudent`,
-  async (student: StudentUpdateDTO) => {  
-    const response = await UpdateStudentApi(student);
+  `/Student/UpdateStudentBasicInfo`,
+  async (student: StudentReadDTO) => {  
+    const response = await UpdateStudentBasicINfoApi(student);
     return response;
   } 
 )

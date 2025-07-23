@@ -233,7 +233,7 @@ public class StudentRerepository : IStudentRepository
         return existingStudent;
     }
 
-    public async Task<bool> UpdateBasicInfoAsync(StudentReadDto student)
+    public async Task<bool> UpdateBasicInfoAsync(StudentUpdateBaiscInfoDto student)
     {
         var studentToUpdate = await _schoolDB
             .Students.Include(s => s.User)
