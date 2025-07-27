@@ -1,4 +1,5 @@
 import axios from "axios";
+import { TeacherUpdateBasicInfoDto } from "../../../../types/types";
 
 
 
@@ -107,13 +108,14 @@ export const UpdateTeacherApi = async (teacher: any) => {
   }
 }
 
-export const UpdateTeacherBasicInfoApi   = async (teacher: any) => {
+export const UpdateTeacherBasicInfoApi   = async (teacher: TeacherUpdateBasicInfoDto) => {
   try {
-    const response = await api.put(`/Teacher/UpdateTeacherBasicInfo`, teacher, {
+    const response = await api.put(`/Teacher/UpdateTeacherBasicInfo`,  teacher  ,      {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'text/plain'
       }
+  
     })
     return response.data
   } catch (error) {

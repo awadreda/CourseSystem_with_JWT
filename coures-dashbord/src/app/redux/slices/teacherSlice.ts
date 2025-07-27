@@ -78,9 +78,10 @@ export const updateTeacherAsync = createAsyncThunk(
 
 export  const UpdateBasicTeacherInfo = createAsyncThunk(
   `/Teacher/UpdateBasicTeacherInfo`,
-  async (teacher: TeacherDTO) => {
+  async (teacher: TeacherUpdateBasicInfoDto) => {
     const response = await UpdateTeacherBasicInfoApi(teacher  );
     if (!response) {
+      console.error('Error updating teacher:', response);
       throw new Error('Failed to update teacher');
     }
     return response;

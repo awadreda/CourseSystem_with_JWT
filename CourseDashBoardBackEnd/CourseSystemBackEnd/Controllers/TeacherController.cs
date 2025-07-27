@@ -146,7 +146,6 @@ namespace CourseSystemBackEnd.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateTeacherBasicInfo(
-            Guid teacherId,
             [FromBody] TeacherUpdateBasicInfoDto teacherUpdateBasicInfoDTO
         )
         {
@@ -155,14 +154,18 @@ namespace CourseSystemBackEnd.Controllers
                 return BadRequest("Teacher data is null.");
             }
 
-            var existingTeacher = await _teacherRepository.GetTeacherByIdAsync(teacherId);
-            if (!(_teacherRepository.IsTeacherExistsAsync(teacherId).Result))
+            if (
+                !(
+                    _teacherRepository
+                        .IsTeacherExistsAsync(teacherUpdateBasicInfoDTO.TeacherID)
+                        .Result
+                )
+            )
             {
                 return NotFound("Teacher not found.");
             }
 
             var TeacherFromUPdatedDTO = teacherUpdateBasicInfoDTO;
-            TeacherFromUPdatedDTO.TeacherID = teacherId;
             var result = await _teacherRepository.UpdateTeacherBasicInfoAsync(
                 TeacherFromUPdatedDTO
             );

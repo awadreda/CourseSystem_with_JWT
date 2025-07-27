@@ -123,9 +123,9 @@ export default function TeachersListComponent () {
                         } else if (column.id === 'Options') {
                           value = (
                             <div className='flex gap-2'>
-                             <TeacherInfoDialog />
-                               <TeacherEditDialog />
-                               <TeacherDeleteDialog  />
+                             <TeacherInfoDialog teacher={teacher} />
+                               <TeacherEditDialog  teacher={teacher} />
+                               <TeacherDeleteDialog   teacher={teacher} />
                             </div> 
                           )
                           } else {
