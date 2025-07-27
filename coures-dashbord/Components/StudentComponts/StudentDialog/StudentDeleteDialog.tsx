@@ -18,7 +18,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
 
 import { toast } from 'react-toastify'
-import { StudentReadDTO } from '../../types/types'
+import { StudentReadDTO } from '../../../types/types'
 import { DeleteStudent, getAllStudents } from '@/app/redux/slices/studentSlice'
 type UserDeleteDialogProps = {
   student: StudentReadDTO

@@ -15,7 +15,7 @@ import InfoIcon from '@mui/icons-material/Info'
 import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles'
 import CloseIcon from '@mui/icons-material/Close'
-import { StudentReadDTO } from '../../types/types'
+import { StudentReadDTO } from '../../../types/types'
 
 
 

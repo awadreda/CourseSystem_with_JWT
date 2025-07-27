@@ -1,4 +1,4 @@
-import { TeacherDTO } from "../../../../types/types";
+import { TeacherDTO, TeacherUpdateBasicInfoDto } from "../../../../types/types";
 import { get } from 'http';
 import { DeleteTeacherApi, getAllTeachersApi, getTeacherByIdApi, UpdateTeacherApi, UpdateTeacherBasicInfoApi } from '../apis/TeacherApis';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -7,7 +7,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 
 interface TeacherState {
-teachers: TeacherDTO[]
+teachers: TeacherUpdateBasicInfoDto[]
 
 status: 'loading' | 'succeeded' | 'failed';
 errors: string | null;
@@ -75,7 +75,7 @@ export const updateTeacherAsync = createAsyncThunk(
   }     
 );
 
-export  const UpdateBasicStudentInfo = createAsyncThunk(
+export  const UpdateBasicTeacherInfo = createAsyncThunk(
   `/Teacher/UpdateBasicTeacherInfo`,
   async (teacher: TeacherDTO) => {
     const response = await UpdateTeacherBasicInfoApi(teacher.user.userID);
@@ -154,7 +154,7 @@ export const teacherSlice = createSlice({
       .addCase(updateTeacherAsync.fulfilled, (state, action) => { 
         state.status = 'succeeded';
         const updatedTeacher = action.payload;
-        const index = state.teachers.findIndex(teacher => teacher.user.userID === updatedTeacher.user.userID);
+        const index = state.teachers.findIndex(teacher => teacher.teacherID === updatedTeacher.teacherID);
         if (index !== -1) {
           state.teachers[index] = updatedTeacher;
         }
@@ -164,19 +164,19 @@ export const teacherSlice = createSlice({
         state.errors = action.error.message || 'Failed to update teacher';
       })
       // Handle the UpdateBasicStudentInfo actions  
-      .addCase(UpdateBasicStudentInfo.pending, (state) => {
+      .addCase(UpdateBasicTeacherInfo.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(UpdateBasicStudentInfo.fulfilled, (state, action) => {
+      .addCase(UpdateBasicTeacherInfo.fulfilled, (state, action) => {
         state.status = 'succeeded';
         const updatedTeacher = action.payload;
-        const index = state.teachers.findIndex(teacher => teacher.user.userID === updatedTeacher.user.userID);
+        const index = state.teachers.findIndex(teacher => teacher.teacherID === updatedTeacher.teacherID);
         if (index !== -1) {
           state.teachers[index] = updatedTeacher;
         }
       }
       )
-      .addCase(UpdateBasicStudentInfo.rejected, (state, action) => {
+      .addCase(UpdateBasicTeacherInfo.rejected, (state, action) => {
         state.status = 'failed';
         state.errors = action.error.message || 'Failed to update teacher basic info';
       } )
@@ -201,7 +201,7 @@ export const teacherSlice = createSlice({
 
 
 
-
+export const teacherReducer = teacherSlice.reducer;
 
 
 

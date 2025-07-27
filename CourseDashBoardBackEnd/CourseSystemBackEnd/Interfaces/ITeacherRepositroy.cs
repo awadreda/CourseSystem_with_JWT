@@ -15,5 +15,5 @@ public interface ITeacherRepository
     Task<bool> UnassignCourseFromTeacherAsync(Guid teacherId, Guid courseId);
     Task<bool> IsTeacherAssignedToCourseAsync(Guid teacherId, Guid courseId);
     Task<bool> IsTeacherExistsAsync(Guid teacherId);
-    Task<bool>UpdateTeacherBasicInfoAsync(TeacherUpdateBasicInfoDto teacherUpdateBasicInfoDto);
+    Task<bool> UpdateTeacherBasicInfoAsync(TeacherUpdateBasicInfoDto teacherUpdateBasicInfoDto);
 }

@@ -18,9 +18,9 @@ import { getAllUsers } from '@/app/redux/slices/userSlice'
 import { CircularProgress } from '@mui/material'
 import { StudentReadDTO, UserReadDTO } from '../../types/types'
 import { getAllStudents } from '@/app/redux/slices/studentSlice'
-import StudentInfoDialog from './StudentInfoDialog'
-import StudentDeleteDialog from './StudentDeleteDialog'
-import StudentEditDialog from './StudentEditDialog'
+import StudentInfoDialog from './StudentDialog/StudentInfoDialog'
+import StudentDeleteDialog from './StudentDialog/StudentDeleteDialog'
+import StudentEditDialog from './StudentDialog/StudentEditDialog'
 // import { UserReadDTO } from '../../types/types'
 
 interface Column {
