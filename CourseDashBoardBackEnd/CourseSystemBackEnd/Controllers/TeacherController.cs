@@ -64,7 +64,7 @@ namespace CourseSystemBackEnd.Controllers
             return Ok(teacher.ToTeacherReadDTO());
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet("GetAllTeachers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -78,7 +78,7 @@ namespace CourseSystemBackEnd.Controllers
             }
 
             var teacherDtos = teachers.Select(t => t.ToTeacherReadDTO()).ToList();
-            return Ok(teachers);
+            return Ok(teacherDtos);
         }
 
         [HttpPost("CreateTeacher")]

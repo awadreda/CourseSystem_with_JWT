@@ -43,7 +43,7 @@ export default function TeachersListComponent () {
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
   const TeachersApi = useAppSelector(state => state.teacher)
-  const Teachers:TeacherUpdateBasicInfoDto[] = TeachersApi.teachers
+  const Teachers:TeacherDTO[] = TeachersApi.teachers
   const dispatch = useAppDispatch()
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -65,9 +65,11 @@ export default function TeachersListComponent () {
       dispatch(getAllTeachersAsync())
       .then(() => {
         
-        console.log('Students in student list component' , TeachersApi.teachers)
+        console.log('Teacher in Teacher list component' , Teachers)
       } )
-      
+      .catch((error) => {
+        console.error('Error fetching teachers:', error)
+      })
     }
 
   }, [])

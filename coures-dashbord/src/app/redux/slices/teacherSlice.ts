@@ -7,7 +7,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 
 interface TeacherState {
-teachers: TeacherUpdateBasicInfoDto[]
+teachers: TeacherDTO[]
 
 status: 'loading' | 'succeeded' | 'failed';
 errors: string | null;
@@ -33,6 +33,7 @@ export const getAllTeachersAsync = createAsyncThunk(`/Teacher/GetAllTeachers`, a
   if (response.errors) {
     throw new Error(response.errors);
   }
+  console.log('Teachers in getAllTeachersAsync:', response);
   return response;
 }    
 )
@@ -67,7 +68,7 @@ export const getTeacherByIdForUpdate = createAsyncThunk(
 export const updateTeacherAsync = createAsyncThunk(
   `/Teacher/UpdateTeacher`,
   async (teacher: TeacherDTO) => {
-    const response = await UpdateTeacherApi(teacher.user.userID);
+    const response = await UpdateTeacherApi(teacher.teacherID);
     if (!response) {
       throw new Error('Failed to update teacher');
     }
@@ -78,7 +79,7 @@ export const updateTeacherAsync = createAsyncThunk(
 export  const UpdateBasicTeacherInfo = createAsyncThunk(
   `/Teacher/UpdateBasicTeacherInfo`,
   async (teacher: TeacherDTO) => {
-    const response = await UpdateTeacherBasicInfoApi(teacher.user.userID);
+    const response = await UpdateTeacherBasicInfoApi(teacher  );
     if (!response) {
       throw new Error('Failed to update teacher');
     }

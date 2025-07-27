@@ -102,15 +102,15 @@ type User = {
 
 // TeacherUpdateDTO
 export type TeacherDTO = {
-  user: {
-    userID: string; // UUID
+  
+    teacherID: string; // UUID
     firstName: string;
     lastName: string;
     email: string;
     role: string;
     courses?: string[] | null;
   };
-};
+
 
 
 

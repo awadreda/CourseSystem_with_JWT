@@ -19,6 +19,7 @@ export const getAllTeachersApi = async () => {
         Accept: 'text/plain'
       }
     })
+    console.log('Teachers in getAllTeachersApi:', response.data)
     return response.data
   } catch (error) {
     console.error(error)
