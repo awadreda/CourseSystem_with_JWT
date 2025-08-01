@@ -75,9 +75,9 @@ public class CourseRepository : ICourseRepository
         return course.Students.Any(s => s.StudentID == studentId);
     }
 
-    public async Task<List<Course>> GetCoursesByInstructorIdAsync(Guid instructorId)
+    public async Task<List<Course>> GetCoursesTeacherIDAsync(Guid TeacherID)
     {
-        return await _schoolDB.Courses.Where(c => c.TeacherID == instructorId).ToListAsync();
+        return await _schoolDB.Courses.Where(c => c.TeacherID == TeacherID).ToListAsync();
     }
 
     public async Task<bool> IsCourseExistsAsync(Guid courseId)

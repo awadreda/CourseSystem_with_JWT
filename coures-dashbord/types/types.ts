@@ -113,6 +113,33 @@ export type TeacherDTO = {
 
 
 
+  export type CourseCreateDTO = {
+    title: string;        // يجب أن يكون بطول بين 2 و100 حرف (تحقق يتم عادةً في الـ frontend أو backend)
+    description: string;  // يجب أن يكون بطول بين 10 و500 حرف
+    credits: number;      // عدد الساعات
+    teacherID: string;    // UUID
+  };
+  
+
+  export type CourseReadDTO = {
+    courseID: string;         // Guid -> string
+    title: string;            // length: 2–100
+    description: string;      // length: 10–500
+    credits: number;
+    teacherID: string;        // Guid -> string
+    students: string[];      // List<Student> -> Student[]
+  };
+
+
+  export type CourseUpdateDTO = {
+    courseID: string;
+    title: string;
+    description: string;
+    credits: number;
+    teacherID: string;
+    // students?: Student[]; // إذا أردت إضافة الطلاب للتحديث
+  };
+  
 
 
 

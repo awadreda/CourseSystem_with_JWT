@@ -20,7 +20,7 @@ namespace CourseSystemBackEnd.Controllers
         {
             _courseRepository = courseRepository;
         }
-       [Authorize(Roles = "Teacher")]
+        //    [Authorize(Roles = "Teacher")]
         [HttpGet("GetAllCourses")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -55,14 +55,14 @@ namespace CourseSystemBackEnd.Controllers
             return Ok(Course.ToCourseReadDTO());
         }
 
-        [HttpGet("GetCoursesByInstructorIdAsync/{instructorId}")]
+        [HttpGet("GetCoursesTeacherID/{teacherId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetCoursesByInstructorIdAsync(Guid instructorId)
+        public async Task<IActionResult> GetCoursesTeacherID(Guid teacherId)
         {
-            var courses = await _courseRepository.GetCoursesByInstructorIdAsync(instructorId);
+            var courses = await _courseRepository.GetCoursesTeacherIDAsync(teacherId);
             if (courses == null || !courses.Any())
             {
                 return NotFound();
@@ -71,12 +71,12 @@ namespace CourseSystemBackEnd.Controllers
             return Ok(courseDtos);
         }
 
-        [HttpGet("GetCoursesByStudentIdAsync/{studentId}")]
+        [HttpGet("GetCoursesByStudentId/{studentId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetCoursesByStudentIdAsync(Guid studentId)
+        public async Task<IActionResult> GetCoursesByStudentId(Guid studentId)
         {
             var courses = await _courseRepository.GetCoursesByStudentIdAsync(studentId);
             if (courses == null || !courses.Any())
@@ -133,7 +133,7 @@ namespace CourseSystemBackEnd.Controllers
             return Ok(updatedCourse.ToCourseReadDTO());
         }
 
-                [HttpDelete("DeleteCourse/{courseId}")]
+        [HttpDelete("DeleteCourse/{courseId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

@@ -7,7 +7,7 @@ public interface ICourseRepository
 {
     Task<List<Course>> GetAllCoursesAsync();
     Task<Course> GetCourseByIdAsync(Guid courseId);
-    Task<List<Course>> GetCoursesByInstructorIdAsync(Guid instructorId);
+    Task<List<Course>> GetCoursesTeacherIDAsync(Guid TeacherID);
     Task<List<Course>> GetCoursesByStudentIdAsync(Guid studentId);
 
     Task<bool> IsCourseExistsAsync(Guid courseId);
