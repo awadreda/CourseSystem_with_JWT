@@ -37,7 +37,7 @@ export const GetCourseByIdApi = async (id: string) => {
 };
 
 
-export const GetCoursesTeacherID = async(teacherId : string) => {
+export const GetCoursesTeacherIDApi = async(teacherId : string) => {
   try {
     const response = await api.get(`/Course/GetCoursesTeacherID/${teacherId}`);
     return response.data;
@@ -49,7 +49,7 @@ export const GetCoursesTeacherID = async(teacherId : string) => {
 
 
 
-export const GetCoursesByStudentId = async (studentId: string) => {
+export const GetCoursesByStudentIdApi = async (studentId: string) => {
   try {
     const response = await api.get(`/Course/GetCoursesByStudentId/${studentId}`);
     return response.data;
@@ -61,7 +61,7 @@ export const GetCoursesByStudentId = async (studentId: string) => {
 
 
 
-export const CreateCourse   =  async(courseCreateDTO:CourseCreateDTO) =>
+export const CreateCourseApi   =  async(courseCreateDTO:CourseCreateDTO) =>
 {
   try {
     const response = await api.post(`/Course/CreateCourse`, courseCreateDTO);
@@ -74,7 +74,7 @@ export const CreateCourse   =  async(courseCreateDTO:CourseCreateDTO) =>
 
 
 
-export const  UpdateCourse =  async(courseUpdateDTO:CourseCreateDTO) =>
+export const  UpdateCourseApi =  async(courseUpdateDTO:CourseCreateDTO) =>
 {
   try {
     const response = await api.put(`/Course/UpdateCourse`, courseUpdateDTO);
@@ -89,7 +89,7 @@ export const  UpdateCourse =  async(courseUpdateDTO:CourseCreateDTO) =>
 
 
 
-export  const DeleteCourse =  async(courseId:string) =>
+export  const DeleteCourseApi =  async(courseId:string) =>
 {
   try {
     const response = await api.delete(`/Course/DeleteCourse/${courseId}`);

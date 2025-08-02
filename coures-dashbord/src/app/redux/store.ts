@@ -4,11 +4,12 @@ import authReducer from './slices/AuthSlice'
 import userReducer from './slices/userSlice'
 import studentReducer from './slices/studentSlice'
 import { teacherReducer } from './slices/teacherSlice'
+import  courseReducer  from './slices/CoursesSlice'
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    // course: courseReducer,
+  course: courseReducer,
     student: studentReducer,
     teacher: teacherReducer,
     user: userReducer

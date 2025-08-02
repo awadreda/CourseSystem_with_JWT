@@ -20,6 +20,7 @@ namespace CourseSystemBackEnd.Controllers
         {
             _courseRepository = courseRepository;
         }
+
         //    [Authorize(Roles = "Teacher")]
         [HttpGet("GetAllCourses")]
         [ProducesResponseType(StatusCodes.Status200OK)]
