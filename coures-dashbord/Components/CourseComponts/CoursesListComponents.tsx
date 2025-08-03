@@ -19,6 +19,9 @@ import { CircularProgress } from '@mui/material'
 import { CourseReadDTO, StudentReadDTO, UserReadDTO } from '../../types/types'
 import { getAllStudents } from '@/app/redux/slices/studentSlice'
 import { GetAllCoursesSlice } from '@/app/redux/slices/CoursesSlice'
+import CourseInfoDialog from './Dialogs/CourseInfoDialog'
+import CourseEditDialog from './Dialogs/CourseEditDialog'
+import CourseDeleteDialog from './Dialogs/CoursetDeleteDialog'
 // import StudentInfoDialog from './StudentDialog/StudentInfoDialog'
 // import StudentDeleteDialog from './StudentDialog/StudentDeleteDialog'
 // import StudentEditDialog from './StudentDialog/StudentEditDialog'
@@ -147,9 +150,9 @@ export default function CoursesListComponents () {
                         } else if (column.id === 'Options') {
                           value = (
                             <div className='flex gap-2'>
-                             {/* <CourseInfoDialog course={Course} /> */}
-                               {/* <CourseEditDialog course={Course} /> */}
-                               {/* <CoursetDeleteDialog course={Course} /> */}
+                             <CourseInfoDialog Course={Course} />
+                               <CourseEditDialog Course={Course} />
+                               <CourseDeleteDialog Course={Course} />
                             </div> 
                           )
                           } else {

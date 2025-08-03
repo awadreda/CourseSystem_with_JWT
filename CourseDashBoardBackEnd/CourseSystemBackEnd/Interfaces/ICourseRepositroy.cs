@@ -1,4 +1,5 @@
 using CourseSystemBackEnd.Data;
+using CourseSystemBackEnd.DTOs;
 using CourseSystemBackEnd.Models;
 
 namespace CourseSystemBackEnd.Interfaces;
@@ -12,7 +13,7 @@ public interface ICourseRepository
 
     Task<bool> IsCourseExistsAsync(Guid courseId);
     Task<Course> AddCourseAsync(Course course);
-    Task<Course> UpdateCourseAsync(Course course);
+    Task<Course> UpdateCourseAsync(CourseUpdateDTO course);
     Task<bool> DeleteCourseAsync(Guid courseId);
     Task<bool> EnrollStudentInCourseAsync(Guid courseId, Guid studentId);
     Task<bool> UnenrollStudentFromCourseAsync(Guid courseId, Guid studentId);

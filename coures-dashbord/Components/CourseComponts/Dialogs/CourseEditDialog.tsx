@@ -22,7 +22,7 @@ import { CourseReadDTO, CourseUpdateDTO, StudentReadDTO, StudentUpdateBasicInfoD
 import { getAllStudents, getStudentByIdForUpdate, UpdateBasicStudentInfo, UpdateStudent } from '@/app/redux/slices/studentSlice'
 import { current } from '@reduxjs/toolkit'
 import { UpdateStudentBasicINfoApi } from '@/app/redux/apis/StudentApis'
-import { UpdateCourseSlice } from '@/app/redux/slices/CoursesSlice'
+import { GetAllCoursesSlice, UpdateCourseSlice } from '@/app/redux/slices/CoursesSlice'
 
 export default function CourseEditDialog ({ Course }: { Course: CourseReadDTO }) {
   const [open, setOpen] = React.useState(false)
@@ -126,7 +126,7 @@ export default function CourseEditDialog ({ Course }: { Course: CourseReadDTO })
           progress: undefined,
           theme: 'light'
         })
-        dispatch(getAllStudents())
+        dispatch(GetAllCoursesSlice())
       }
 
       // if (studentApi.status === 'succeeded') {
@@ -187,29 +187,29 @@ export default function CourseEditDialog ({ Course }: { Course: CourseReadDTO })
             <TextField
               required
               margin='dense'
-              id='lastName'
-              name='lastName'
-              label='Last Name'
+              id='description'
+              name='description'
+              label='Description'
               type='text'
               fullWidth
               variant='standard'
-              value={studetnToUpdate.lastName}
+              value={coursenToUpdate.description}
               onChange={handleChange}
             />
             <TextField
               required
               margin='dense'
-              id='email'
-              name='email'
-              label='Email Address'
-              type='email'
+              id='credits'
+              name='credits'
+              label='Credits'
+              type='number'
               fullWidth
               variant='standard'
-              value={studetnToUpdate.email}
+              value={   coursenToUpdate.credits}
               onChange={handleChange}
             />
 
-            <TextField
+            {/* <TextField
               required
               margin='dense'
               id='gpa'
@@ -218,9 +218,9 @@ export default function CourseEditDialog ({ Course }: { Course: CourseReadDTO })
               type='number'
               fullWidth
               variant='standard'
-              value={studetnToUpdate.gpa}
+              value={coursenToUpdate.}
               onChange={handleChange} 
-            />
+            /> */}
 
             {/* <TextField
               required
@@ -235,7 +235,7 @@ export default function CourseEditDialog ({ Course }: { Course: CourseReadDTO })
               onChange={handleChange}
             /> */}
 
-            <InputLabel id='demo-simple-select-label'>Role</InputLabel>
+            {/* <InputLabel id='demo-simple-select-label'>Role</InputLabel>
             <Select
               labelId='demo-simple-select-label'
               id='demo-simple-select'
@@ -245,7 +245,7 @@ export default function CourseEditDialog ({ Course }: { Course: CourseReadDTO })
             >
               <MenuItem value={'Studnet'}>Studnet</MenuItem>
               <MenuItem value={'Teacher'}>Teacher</MenuItem>
-            </Select>
+            </Select> */}
             <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>
               <Button type='submit'>Update</Button>

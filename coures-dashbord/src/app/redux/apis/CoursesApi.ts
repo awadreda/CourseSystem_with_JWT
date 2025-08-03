@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CourseCreateDTO } from "../../../../types/types";
+import { CourseCreateDTO, CourseUpdateDTO } from "../../../../types/types";
 
 
 
@@ -74,7 +74,7 @@ export const CreateCourseApi   =  async(courseCreateDTO:CourseCreateDTO) =>
 
 
 
-export const  UpdateCourseApi =  async(courseUpdateDTO:CourseCreateDTO) =>
+export const  UpdateCourseApi =  async(courseUpdateDTO:CourseUpdateDTO) =>
 {
   try {
     const response = await api.put(`/Course/UpdateCourse`, courseUpdateDTO);

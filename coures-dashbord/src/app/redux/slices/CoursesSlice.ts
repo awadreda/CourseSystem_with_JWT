@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { CourseReadDTO, CourseUpdateDTO } from "../../../../types/types"
+import { CourseReadDTO, CourseUpdateDTO ,       } from "../../../../types/types"
 import { GetAllCoursesApi, GetCourseByIdApi, GetCoursesTeacherIDApi, GetCoursesByStudentIdApi, CreateCourseApi, UpdateCourseApi, DeleteCourseApi } from '../apis/CoursesApi';
 
 
@@ -98,7 +98,7 @@ export const CreateCourseSlice = createAsyncThunk(
 
 
 
-export const UpdateCourseSlice = createAsyncThunk(`/Courses/UpdateCourse`, async(course: CourseUpdateDTO) => {
+export const UpdateCourseSlice = createAsyncThunk(`/Courses/UpdateCourse`, async(course:CourseUpdateDTO) => {
   try {
     const response = await UpdateCourseApi(course);
     return response.data;

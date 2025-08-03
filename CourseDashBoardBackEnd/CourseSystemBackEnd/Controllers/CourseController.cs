@@ -125,13 +125,13 @@ namespace CourseSystemBackEnd.Controllers
             {
                 return BadRequest("Course data is null.");
             }
-            var CourseFromUPdatedDTO = courseUpdateDTO.ToCourseFromUpdateDTO();
-            var updatedCourse = await _courseRepository.UpdateCourseAsync(CourseFromUPdatedDTO);
+            // var CourseFromUPdatedDTO = courseUpdateDTO.ToCourseFromUpdateDTO();
+            var updatedCourse = await _courseRepository.UpdateCourseAsync(courseUpdateDTO);
             if (updatedCourse == null)
             {
                 return BadRequest("Failed to update course.");
             }
-            return Ok(updatedCourse.ToCourseReadDTO());
+            return Ok(updatedCourse);
         }
 
         [HttpDelete("DeleteCourse/{courseId}")]

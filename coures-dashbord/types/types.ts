@@ -139,7 +139,11 @@ export type TeacherDTO = {
     teacherID: string;
     // students?: Student[]; // إذا أردت إضافة الطلاب للتحديث
   };
-  
+  // "courseID": "fd9eb96a-a2ce-4134-1923-08ddb702afee",
+  //   "title": "Math",
+  //   "description": "Math is the best subject ",
+  //   "credits": 60,
+  //   "teacherID": "b904487b-f557-418f-9995-69bcebd9b8f7"
 
 
 

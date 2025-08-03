@@ -1,4 +1,5 @@
 using CourseSystemBackEnd.Data;
+using CourseSystemBackEnd.DTOs;
 using CourseSystemBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
@@ -169,7 +170,7 @@ public class CourseRepository : ICourseRepository
         return true;
     }
 
-    public async Task<Course> UpdateCourseAsync(Course course)
+    public async Task<Course> UpdateCourseAsync(CourseUpdateDTO course)
     {
         if (course == null || course.CourseID == Guid.Empty)
         {
@@ -190,8 +191,8 @@ public class CourseRepository : ICourseRepository
         existingCourse.Credits = course.Credits;
         existingCourse.TeacherID = course.TeacherID;
         // existingCourse.Students = course.Students;
-        // _schoolDB.Courses.Update(existingCourse);
-        // await _schoolDB.SaveChangesAsync();
+        _schoolDB.Courses.Update(existingCourse);
+        await _schoolDB.SaveChangesAsync();
         return existingCourse;
     }
 }
