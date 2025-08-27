@@ -11,6 +11,8 @@ public interface ICourseRepository
     Task<List<Course>> GetCoursesTeacherIDAsync(Guid TeacherID);
     Task<List<Course>> GetCoursesByStudentIdAsync(Guid studentId);
 
+    // Task<List<Course>> GetCoursesByGroubIDs(Guid[] groupIdsCourses);
+
     Task<bool> IsCourseExistsAsync(Guid courseId);
     Task<Course> AddCourseAsync(Course course);
     Task<Course> UpdateCourseAsync(CourseUpdateDTO course);

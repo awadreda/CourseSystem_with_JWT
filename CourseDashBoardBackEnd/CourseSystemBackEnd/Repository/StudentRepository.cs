@@ -255,4 +255,24 @@ public class StudentRerepository : IStudentRepository
         await _schoolDB.SaveChangesAsync();
         return true;
     }
+
+    public async Task<Student> GetStudentWithAllInfoAndCoursesAndTeachersById(Guid studentId)
+    {
+        if (!IsStudentExistsAsync(studentId).Result)
+        {
+            return null;
+        }
+
+        var student = await _schoolDB
+            .Students.Include(s => s.User)
+            .Include(s => s.Courses)
+            .ThenInclude(c => c.Teacher).ThenInclude(t => t.User)
+            .FirstOrDefaultAsync(s => s.StudentID == studentId);
+
+        if (student == null)
+        {
+            return null;
+        }
+        return student;
+    }
 }

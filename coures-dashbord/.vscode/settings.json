@@ -1,0 +1,26 @@
+{
+  "files.exclude": {
+    "node_modules": "explorerExcludedFiles",
+    ".pnp": "explorerExcludedFiles",
+    ".pnp.*": "explorerExcludedFiles",
+    ".yarn/*": "explorerExcludedFiles",
+    "!.yarn/patches": "explorerExcludedFiles",
+    "!.yarn/plugins": "explorerExcludedFiles",
+    "!.yarn/releases": "explorerExcludedFiles",
+    "!.yarn/versions": "explorerExcludedFiles",
+    "coverage": "explorerExcludedFiles",
+    ".next/": "explorerExcludedFiles",
+    "out/": "explorerExcludedFiles",
+    "build": "explorerExcludedFiles",
+    ".DS_Store": "explorerExcludedFiles",
+    "*.pem": "explorerExcludedFiles",
+    "npm-debug.log*": "explorerExcludedFiles",
+    "yarn-debug.log*": "explorerExcludedFiles",
+    "yarn-error.log*": "explorerExcludedFiles",
+    ".pnpm-debug.log*": "explorerExcludedFiles",
+    ".env*": "explorerExcludedFiles",
+    ".vercel": "explorerExcludedFiles",
+    "*.tsbuildinfo": "explorerExcludedFiles",
+    "next-env.d.ts": "explorerExcludedFiles"
+  }
+}
