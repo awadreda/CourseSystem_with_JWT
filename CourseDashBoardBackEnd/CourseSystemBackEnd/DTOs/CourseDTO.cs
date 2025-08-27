@@ -1,6 +1,8 @@
 namespace CourseSystemBackEnd.DTOs;
 
 using System.ComponentModel.DataAnnotations;
+using CourseSystemBackEnd.DTOs.StudentDTOs;
+using CourseSystemBackEnd.DTOs.TeacherDTOs;
 using CourseSystemBackEnd.Models;
 
 public record CourseCreateDTO
@@ -33,7 +35,8 @@ public record CourseReadDTO
 
     [Required]
     public Guid TeacherID { get; init; }
-    public List<Student> Students { get; init; } = new List<Student>();
+    public TeacherReadDTO Teacher { get; init; } = new TeacherReadDTO();
+    public List<StudentReadDto> Students { get; init; } = new List<StudentReadDto>();
 }
 
 public record CourseUpdateDTO

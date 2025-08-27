@@ -7,6 +7,7 @@ using CourseSystemBackEnd.Data;
 using CourseSystemBackEnd.DTOs;
 using CourseSystemBackEnd.DTOs.StudentDTOs;
 using CourseSystemBackEnd.Interfaces;
+using CourseSystemBackEnd.Mappers;
 using CourseSystemBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -256,7 +257,7 @@ public class StudentRerepository : IStudentRepository
         return true;
     }
 
-    public async Task<Student> GetStudentWithAllInfoAndCoursesAndTeachersById(Guid studentId)
+    public async Task<StudentWithAllInfoDto> GetStudentWithAllInfoAndCoursesAndTeachersById(Guid studentId)
     {
         if (!IsStudentExistsAsync(studentId).Result)
         {
@@ -273,6 +274,16 @@ public class StudentRerepository : IStudentRepository
         {
             return null;
         }
-        return student;
+
+        var studentWithAllData = new StudentWithAllInfoDto
+        {
+            StudentID = student.StudentID,
+            User = student.User.toUserReadDTO(),
+            Courses = student.Courses.Select(c => c.ToCourseReadDTO()).ToList()
+
+        };
+
+       
+        return studentWithAllData;
     }
 }

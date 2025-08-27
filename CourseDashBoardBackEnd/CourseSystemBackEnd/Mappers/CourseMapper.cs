@@ -13,8 +13,10 @@ public static class CourseMapper
             Title = course.Title,
             Description = course.Description,
             Credits = course.Credits,
-            Students = course.Students.ToList(),
+            Students = course.Students.Select(s => s.ToStudentReadDTO()).ToList(),
             TeacherID = (Guid)course.TeacherID,
+            Teacher = course.Teacher.ToTeacherReadDTO(),
+            
         };
     }
 

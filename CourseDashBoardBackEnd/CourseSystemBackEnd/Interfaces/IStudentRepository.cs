@@ -11,7 +11,7 @@ namespace CourseSystemBackEnd.Interfaces
         Task<List<Student>> GetAllStudentsAsync();
         Task<Student> GetStudentByIdAsync(Guid studentId);
         Task<Student> GetStudentByEmailAsync(string email);
-        Task<Student> GetStudentWithAllInfoAndCoursesAndTeachersById(Guid studentId);
+        Task<StudentWithAllInfoDto> GetStudentWithAllInfoAndCoursesAndTeachersById(Guid studentId);
 
         Task<Student> AddStudentAsync(Student student);
         Task<Student> UpdateStudentAsync(Student student);
