@@ -73,6 +73,35 @@ export const getStudentByEmailApi = async (email: string) => {
     throw error
   }
 }
+
+
+export const GetStudentWithAllInfoAndCoursesAndTeachersByStudenEmail
+ = async (email: string) => {
+  
+  try {
+    const response = await api.get(`/Student/GetStudentWithAllInfoAndCoursesAndTeachersByStudenEmail/${email}`, 
+      {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'text/plain'
+      }
+    })
+    console.log('student in GetStudentWithAllInfoAndCoursesAndTeachersByStudenEmail:', response.data)
+    return response.data
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+  
+}
+
+
+
+
+
+
+
+
 export const UpdateStudentApi = async (studentUpdateDTO: StudentUpdateDTO) => {
   try {
     const response = await api.put(

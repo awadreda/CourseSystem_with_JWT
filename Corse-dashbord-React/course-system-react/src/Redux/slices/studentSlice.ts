@@ -1,7 +1,7 @@
-import type{ StudentCreateDTO, StudentReadDTO, StudentUpdateDTO } from "../../types/types";
+import type{ StudentCreateDTO, StudentReadDTO, StudentUpdateDTO, StudentWithUser } from "../../types/types";
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { CreateStudentApi, getAllStudentsApi, getStudentByEmailApi, getStudentByIdApi, UpdateStudentApi, DeleteStudentApi, getStudentByIdForUpdateApi, UpdateStudentBasicINfoApi } from '../apis/StudentApis';
+import { CreateStudentApi, getAllStudentsApi, getStudentByEmailApi, getStudentByIdApi, UpdateStudentApi, DeleteStudentApi, getStudentByIdForUpdateApi, UpdateStudentBasicINfoApi, GetStudentWithAllInfoAndCoursesAndTeachersByStudenEmail } from '../apis/StudentApis';
 // import { get } from 'http';
 // import { updateUserBasicInfoApi } from "../apis/UsersApis";
 
@@ -15,6 +15,8 @@ interface studentState {
   errors: string | null;
   student: StudentReadDTO  | StudentUpdateDTO;
   CurrentStudent: StudentReadDTO | null;
+  StudentWithAllInfoAndCoursesAndTeachersByStudenEmail: StudentWithUser | null
+
 }
 
 const initialState: studentState = {
@@ -33,6 +35,7 @@ const initialState: studentState = {
     
   },
   CurrentStudent: null
+  , StudentWithAllInfoAndCoursesAndTeachersByStudenEmail: null
 };
 
 
@@ -90,6 +93,15 @@ export const getStudentByEmail = createAsyncThunk(
     return response;
   }
 );
+
+export const GetStudentWithAllInfoAndCoursesAndTeachersByStudenEmailSlice = createAsyncThunk(
+  `/Student/GetStudentWithAllInfoAndCoursesAndTeachersByStudenEmail`,
+  async (email: string) => {
+    const response = await GetStudentWithAllInfoAndCoursesAndTeachersByStudenEmail(email);
+    console.log('student in  Slice GetStudentWithAllInfoAndCoursesAndTeachersByStudenEmail:', response);
+    return response as StudentWithUser;
+  }
+)
 
 
 export const createStudent = createAsyncThunk(
@@ -188,6 +200,21 @@ export const studentSlice = createSlice({
       .addCase(getStudentByEmail.rejected, (state, action) => {
         state.status = 'failed';
         state.errors = action.error.message || 'Failed to fetch student';
+      })
+      // Handle the GetStudentWithAllInfoAndCoursesAndTeachersByStudenEmail actions
+      .addCase(GetStudentWithAllInfoAndCoursesAndTeachersByStudenEmailSlice.pending, state => {
+        state.status = 'loading';
+      }
+      )      
+      .addCase(GetStudentWithAllInfoAndCoursesAndTeachersByStudenEmailSlice.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.StudentWithAllInfoAndCoursesAndTeachersByStudenEmail = action.payload;
+
+      })
+      .addCase(GetStudentWithAllInfoAndCoursesAndTeachersByStudenEmailSlice.rejected, (state, action) => {
+        state.status = 'failed';
+        state.errors = action.error.message || 'Failed to fetch student';
+        
       })
 
       // Handle the createStudent actions 

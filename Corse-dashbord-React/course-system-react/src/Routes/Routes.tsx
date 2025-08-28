@@ -9,6 +9,7 @@ import HomePage from "../Pages/HomePage/HomePage";
 import AdminDashBord from "../Pages/Dashboards/Admin/AdminDashBord";
 import AdminSidebar from "../Components/Navbars/AdminSidebar";
 import AdminLayout from "../Pages/Dashboards/Admin/AdminLayout";
+import TeachersList from "../Pages/Dashboards/Admin/teacherslist/TeachersList";
 
 
 
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
       },
       {
         path:'teachersListDashbord',
-        element: <CoursesList />,
+        element: <TeachersList />,
       },
       {
         path:'coursesListDashbord',element:<CoursesList/>,

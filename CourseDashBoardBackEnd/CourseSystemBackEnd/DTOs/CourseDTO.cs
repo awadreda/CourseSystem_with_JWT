@@ -35,7 +35,7 @@ public record CourseReadDTO
 
     [Required]
     public Guid TeacherID { get; init; }
-    public TeacherReadDTO Teacher { get; init; } = new TeacherReadDTO();
+    public TeacherReadDTO? Teacher { get; init; } = new TeacherReadDTO();
     public List<StudentReadDto> Students { get; init; } = new List<StudentReadDto>();
 }
 

@@ -15,7 +15,8 @@ public static class CourseMapper
             Credits = course.Credits,
             Students = course.Students.Select(s => s.ToStudentReadDTO()).ToList(),
             TeacherID = (Guid)course.TeacherID,
-            Teacher = course.Teacher.ToTeacherReadDTO(),
+
+          Teacher = course.Teacher != null ? course.Teacher.ToTeacherReadDTO() : null
             
         };
     }

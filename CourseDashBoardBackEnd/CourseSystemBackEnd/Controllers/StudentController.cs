@@ -155,7 +155,7 @@ namespace CourseSystemBackEnd.Controllers
             return Ok(new { message = "Student deleted successfully." });
         }
 
-        // for UserINterFace
+        // for StduentINterFace
 
         [HttpGet("GetStudentWithAllInfoAndCoursesAndTeachersById/{studentId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -165,6 +165,21 @@ namespace CourseSystemBackEnd.Controllers
         {
             var student = await _studentRepository.GetStudentWithAllInfoAndCoursesAndTeachersById(
                 studentId
+            );
+            if (student == null)
+            {
+                return NotFound();
+            }
+            return Ok(student);
+        }
+        [HttpGet("GetStudentWithAllInfoAndCoursesAndTeachersByStudenEmail/{StudentEmail}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> GetStudentWithAllInfoAndCoursesAndTeachersByStudentEmail(string StudentEmail)
+        {
+            var student = await _studentRepository.GetStudentWithAllInfoAndCoursesAndTeachersByEmail(
+                StudentEmail
             );
             if (student == null)
             {

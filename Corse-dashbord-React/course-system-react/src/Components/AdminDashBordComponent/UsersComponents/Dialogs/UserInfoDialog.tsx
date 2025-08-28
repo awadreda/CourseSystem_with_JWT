@@ -18,6 +18,7 @@ import { styled } from '@mui/material/styles'
 import CloseIcon from '@mui/icons-material/Close'
 // import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
 import { useDispatch } from 'react-redux'
+import { useAppSelector } from '../../../../Redux/hooks'
 // import {
 //   getAllUsers,
 //   getUserByID,
@@ -129,8 +130,5 @@ export default function UserInfoDialog ({user}:{user:UserReadDTO}) {
       </BootstrapDialog>
     </React.Fragment>
   )
-}
-function useAppSelector(arg0: (state: any) => any) {
-  throw new Error('Function not implemented.')
 }
 

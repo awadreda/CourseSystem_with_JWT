@@ -42,7 +42,7 @@ public class CourseRepository : ICourseRepository
 
     public async Task<List<Course>> GetAllCoursesAsync()
     {
-        var courses = await _schoolDB.Courses.ToListAsync();
+        var courses = await _schoolDB.Courses.Include(c => c.Teacher).ThenInclude(t => t.User).ToListAsync();
 
         return courses;
     }

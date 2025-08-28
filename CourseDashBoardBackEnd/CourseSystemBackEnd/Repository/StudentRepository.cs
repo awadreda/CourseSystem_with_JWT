@@ -78,6 +78,11 @@ public class StudentRerepository : IStudentRepository
     {
         return await _schoolDB.Students.AnyAsync(s => s.StudentID == StudentId);
     }
+   
+    public async Task<bool> IsStudentExistsByEmailAsync(string Email)
+    {
+        return await _schoolDB.Students.AnyAsync(s => s.User.Email == Email);
+    }
 
     //====================Add Student ======================
 
@@ -269,6 +274,35 @@ public class StudentRerepository : IStudentRepository
             .Include(s => s.Courses)
             .ThenInclude(c => c.Teacher).ThenInclude(t => t.User)
             .FirstOrDefaultAsync(s => s.StudentID == studentId);
+
+        if (student == null)
+        {
+            return null;
+        }
+
+        var studentWithAllData = new StudentWithAllInfoDto
+        {
+            StudentID = student.StudentID,
+            User = student.User.toUserReadDTO(),
+            Courses = student.Courses.Select(c => c.ToCourseReadDTO()).ToList()
+
+        };
+
+       
+        return studentWithAllData;
+    }
+    public async Task<StudentWithAllInfoDto> GetStudentWithAllInfoAndCoursesAndTeachersByEmail(string email)
+    {
+        if (!IsStudentExistsByEmailAsync(email).Result)
+        {
+            return null;
+        }
+
+        var student = await _schoolDB
+            .Students.Include(s => s.User)
+            .Include(s => s.Courses)
+            .ThenInclude(c => c.Teacher).ThenInclude(t => t.User)
+            .FirstOrDefaultAsync(s => s.User.Email == email);
 
         if (student == null)
         {
