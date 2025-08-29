@@ -207,11 +207,11 @@ export type StudentWithUser = {
   courses?: CourseReadWithAllInfoDTO[] | null
 }
 
-// export type TeacherWithUser = {
-//   teacherID: string
-//   user: UserReadDTO
-//   courses?: CourseReadWithAllInfoDTO[] | null
-// }
+export type TeacherWithUser = {
+  teacherID: string
+  user: UserReadDTO
+  courses?: CourseReadWithAllInfoDTO[] | null
+}
 
 export type CourseReadWithAllInfoDTO = {
   courseID: string

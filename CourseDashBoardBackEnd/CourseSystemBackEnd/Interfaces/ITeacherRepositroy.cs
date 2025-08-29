@@ -7,6 +7,8 @@ public interface ITeacherRepository
 {
     Task<Teacher> GetTeacherByIdAsync(Guid teacherId);
     Task<Teacher> GetTeacherByEmailAsync(string email);
+    Task<TeacherWithAllInfoDto> GetStudentWithAllInfoAndCoursesAndTeachersByEmail(string email)
+;
     Task<List<Teacher>> GetAllTeachersAsync();
     Task<Teacher> CreateTeacherAsync(Teacher teacher);
     Task<Teacher> UpdateTeacherAsync(Teacher teacher);

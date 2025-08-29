@@ -37,3 +37,10 @@ public record TeacherUpdateBasicInfoDto
     public string Email { get; set; } = string.Empty;
     public string Role { get; set; } = string.Empty;
 }
+
+public record TeacherWithAllInfoDto
+{
+    public Guid TeacherID { get; set; }
+    public UserReadDTO User { get; set; } = null!;
+    public List<CourseReadDTO> Courses { get; set; } = null!;
+}

@@ -64,6 +64,21 @@ namespace CourseSystemBackEnd.Controllers
             return Ok(teacher.ToTeacherReadDTO());
         }
 
+
+        [HttpGet("GetStudentWithAllInfoAndCoursesAndTeachersByEmail,{email}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> GetStudentWithAllInfoAndCoursesAndTeachersByEmail(string email)
+        {
+            var teacher = await _teacherRepository.GetStudentWithAllInfoAndCoursesAndTeachersByEmail(email);
+            if (teacher == null)
+            {
+                return NotFound();
+            }
+            return Ok(teacher);
+        }
+
         // [Authorize]
         [HttpGet("GetAllTeachers")]
         [ProducesResponseType(StatusCodes.Status200OK)]

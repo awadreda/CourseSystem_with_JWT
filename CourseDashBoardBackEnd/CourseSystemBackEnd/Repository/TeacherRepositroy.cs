@@ -1,6 +1,7 @@
 using CourseSystemBackEnd.Data;
 using CourseSystemBackEnd.DTOs.TeacherDTOs;
 using CourseSystemBackEnd.Interfaces;
+using CourseSystemBackEnd.Mappers;
 using CourseSystemBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -211,4 +212,40 @@ public class TeacherRepository : ITeacherRepository
         await _schoolDB.SaveChangesAsync();
         return true;
     }
+
+
+      public async Task<TeacherWithAllInfoDto> GetStudentWithAllInfoAndCoursesAndTeachersByEmail(string email)
+    {
+        if (!IsTeacherExistsByEmailAsync(email).Result)
+        {
+            return null;
+        }
+
+        var teacher = await _schoolDB
+            .Teachers.Include(s => s.User)
+            .Include(s => s.Courses)
+            .ThenInclude(c => c.Students).ThenInclude(t => t.User)
+            .FirstOrDefaultAsync(s => s.User.Email == email);
+
+        if (teacher == null)
+        {
+            return null;
+        }
+
+        var teacherWithAllInfoDto = new TeacherWithAllInfoDto
+        {
+            TeacherID = teacher.TeacherID,
+            User = teacher.User.toUserReadDTO(),
+            Courses = teacher.Courses.Select(c => c.ToCourseReadDTO()).ToList()
+
+        };
+
+       
+        return teacherWithAllInfoDto;
+    }
+
+  private async Task<bool> IsTeacherExistsByEmailAsync(string email)
+  {
+    return await _schoolDB.Teachers.AnyAsync(t => t.User.Email == email);
+  }
 }
