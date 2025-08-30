@@ -79,6 +79,22 @@ export const getTeacherByEmailApi = async (email: string) => {
   }
 }
 
+export const getTeacherWithAllDataByEmailApi = async (email: string) => {
+  try {
+    const response = await api.get(`/Teacher/GetTeacherWithAllInfoAndCoursesAndTeachersByEmail/${email}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'text/plain'
+      }
+    })
+      console.log('Teacher in getTeacherWithAllDataByEmailApi:', response.data)
+    return response.data
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
 export const  CreateTeacherApi = async (teacher: any) => {
   try {
     const response = await api.post(`/Teacher/CreateTeacher`, teacher, {

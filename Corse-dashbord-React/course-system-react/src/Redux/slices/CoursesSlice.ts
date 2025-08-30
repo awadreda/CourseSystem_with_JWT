@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { CourseReadDTO, CourseUpdateDTO, } from "../../types/types";
+import type { CourseReadDTO, CourseReadWithAllInfoDTO, CourseUpdateDTO, } from "../../types/types";
 import { GetAllCoursesApi, GetCourseByIdApi, GetCoursesTeacherIDApi, GetCoursesByStudentIdApi, CreateCourseApi, UpdateCourseApi, DeleteCourseApi } from '../apis/CoursesApi';
 
 
@@ -8,11 +8,11 @@ import { GetAllCoursesApi, GetCourseByIdApi, GetCoursesTeacherIDApi, GetCoursesB
 
 
 interface CourseState {
-  courses: CourseReadDTO[]
+  courses: CourseReadWithAllInfoDTO[]
   status: 'loading' | 'succeeded' | 'failed'
   errors: string | null
-  course: CourseReadDTO | null
-  CurrentCourse: CourseReadDTO | null
+  course: CourseReadWithAllInfoDTO | null
+  CurrentCourse: CourseReadWithAllInfoDTO | null
 }
 
 

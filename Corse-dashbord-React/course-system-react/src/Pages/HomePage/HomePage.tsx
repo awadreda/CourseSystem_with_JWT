@@ -1,5 +1,6 @@
 import * as React from "react";
 import HomeNavbar from "../../Components/Navbars/HomeNavbar";
+import { Link } from "react-router";
 
 export interface IHomePageProps { }
 
@@ -19,7 +20,9 @@ export default function HomePage(props: IHomePageProps) {
           and build your skills in programming, design, and more.
         </p>
         <button className="bg-white text-blue-700 px-6 py-3 rounded-lg font-semibold shadow hover:bg-gray-100 transition">
+       <Link to="CoursesList">
           Browse Courses
+       </Link>
         </button>
       </section>
 

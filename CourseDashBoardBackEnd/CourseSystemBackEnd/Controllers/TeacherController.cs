@@ -65,13 +65,13 @@ namespace CourseSystemBackEnd.Controllers
         }
 
 
-        [HttpGet("GetStudentWithAllInfoAndCoursesAndTeachersByEmail,{email}")]
+        [HttpGet("GetTeacherWithAllInfoAndCoursesAndTeachersByEmail/{email}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> GetStudentWithAllInfoAndCoursesAndTeachersByEmail(string email)
+        public async Task<IActionResult> GetTeacherWithAllInfoAndCoursesAndTeachersByEmail(string email)
         {
-            var teacher = await _teacherRepository.GetStudentWithAllInfoAndCoursesAndTeachersByEmail(email);
+            var teacher = await _teacherRepository.GetTeacherWithAllInfoAndCoursesAndTeachersByEmail(email);
             if (teacher == null)
             {
                 return NotFound();

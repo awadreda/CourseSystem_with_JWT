@@ -214,7 +214,7 @@ public class TeacherRepository : ITeacherRepository
     }
 
 
-      public async Task<TeacherWithAllInfoDto> GetStudentWithAllInfoAndCoursesAndTeachersByEmail(string email)
+      public async Task<TeacherWithAllInfoDto> GetTeacherWithAllInfoAndCoursesAndTeachersByEmail(string email)
     {
         if (!IsTeacherExistsByEmailAsync(email).Result)
         {

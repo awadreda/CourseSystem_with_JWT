@@ -1,6 +1,6 @@
-import  type { TeacherDTO, TeacherUpdateBasicInfoDto } from "../../types/types";
+import  type { TeacherDTO, TeacherUpdateBasicInfoDto, TeacherWithUser } from "../../types/types";
 // import { get } from 'http';
-import { DeleteTeacherApi, getAllTeachersApi, getTeacherByIdApi, UpdateTeacherApi, UpdateTeacherBasicInfoApi } from '../apis/TeacherApis';
+import { DeleteTeacherApi, getAllTeachersApi, getTeacherByIdApi, getTeacherWithAllDataByEmailApi, UpdateTeacherApi, UpdateTeacherBasicInfoApi } from '../apis/TeacherApis';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 
@@ -13,6 +13,7 @@ status: 'loading' | 'succeeded' | 'failed';
 errors: string | null;
 teacher: TeacherDTO | null;   
 currentTeacher: TeacherDTO | null;
+TeacherWithAllDataByTeacherEmail: TeacherWithUser | null
 
 }
 
@@ -22,6 +23,7 @@ const initialState: TeacherState = {
   errors: null,
   teacher: null,
   currentTeacher: null,
+  TeacherWithAllDataByTeacherEmail: null
 };
 
 
@@ -63,6 +65,18 @@ export const getTeacherByIdForUpdate = createAsyncThunk(
   }
 
 );
+
+export const GetTeacherWithAllInfoAndCoursesAndTeachersByEmail = createAsyncThunk(
+  `/Teacher/GetTeacherWithAllInfoAndCoursesAndTeachersByEmail`,
+  async (email: string) => {
+    const response = await getTeacherWithAllDataByEmailApi(email);
+    if (!response) {
+      throw new Error('Failed to fetch teacher');
+    }
+    console.log('Teacher in GetTeacherWithAllInfoAndCoursesAndTeachersByEmail from slice:', response);
+    return response as TeacherWithUser;
+  }
+)
 
 
 export const updateTeacherAsync = createAsyncThunk(
@@ -147,6 +161,19 @@ export const teacherSlice = createSlice({
       .addCase(getTeacherByIdForUpdate.rejected, (state, action) => {
         state.status = 'failed';
         state.errors = action.error.message || 'Failed to fetch teacher for update';  
+      })
+
+      // Handle the GetTeacherWithAllInfoAndCoursesAndTeachersByEmail actions
+      .addCase(GetTeacherWithAllInfoAndCoursesAndTeachersByEmail.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(GetTeacherWithAllInfoAndCoursesAndTeachersByEmail.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.TeacherWithAllDataByTeacherEmail = action.payload;
+      })
+      .addCase(GetTeacherWithAllInfoAndCoursesAndTeachersByEmail.rejected, (state, action) => {
+        state.status = 'failed';
+        state.errors = action.error.message || 'Failed to fetch teacher';
       })
       // Handle the updateTeacherAsync actions
       .addCase(updateTeacherAsync.pending, (state) => {

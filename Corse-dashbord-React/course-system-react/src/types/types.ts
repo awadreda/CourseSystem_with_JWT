@@ -220,7 +220,7 @@ export type CourseReadWithAllInfoDTO = {
   credits: number
   teacherID: string
   teacher: TeacherDTO
-  students: StudentWithUser[]
+  students: StudentReadDTO[]
 }
 
 

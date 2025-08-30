@@ -10,6 +10,7 @@ import AdminDashBord from "../Pages/Dashboards/Admin/AdminDashBord";
 import AdminSidebar from "../Components/Navbars/AdminSidebar";
 import AdminLayout from "../Pages/Dashboards/Admin/AdminLayout";
 import TeachersList from "../Pages/Dashboards/Admin/teacherslist/TeachersList";
+import CourseListTOAssgin from "../Pages/Dashboards/Courses/CourseListTOAssgin";
 
 
 
@@ -66,6 +67,11 @@ const router = createBrowserRouter([
     ,{
       path:'teacherUI'
       ,element:<TeacherInfoPage/>
+    }
+
+    ,{
+      path :'CoursesList',
+      element:<CourseListTOAssgin/>
     }
 
 
