@@ -11,6 +11,7 @@ import AdminSidebar from "../Components/Navbars/AdminSidebar";
 import AdminLayout from "../Pages/Dashboards/Admin/AdminLayout";
 import TeachersList from "../Pages/Dashboards/Admin/teacherslist/TeachersList";
 import CourseListTOAssgin from "../Pages/Dashboards/Courses/CourseListTOAssgin";
+import CourseDetails from "../Pages/Dashboards/Courses/CourseDetails";
 
 
 
@@ -72,6 +73,11 @@ const router = createBrowserRouter([
     ,{
       path :'CoursesList',
       element:<CourseListTOAssgin/>
+    }
+
+    ,{
+      path : "CoursesList/:courseId",
+      element:<CourseDetails/>
     }
 
 

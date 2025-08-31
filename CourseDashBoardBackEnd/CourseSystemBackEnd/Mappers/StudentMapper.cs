@@ -11,6 +11,8 @@ public static class StudentMapper
 {
     public static StudentReadDto ToStudentReadDTO(this Student student)
     {
+        
+
         return new StudentReadDto
         {
             StudentID = student.StudentID,

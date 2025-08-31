@@ -5,6 +5,8 @@ import userReducer from './slices/userSlice'
 import studentReducer from './slices/studentSlice'
 import { teacherReducer } from './slices/teacherSlice'
 import  courseReducer  from './slices/CoursesSlice'
+import  EnrollmentSlice  from './slices/EnorllmentSlice'
+
 
 const store = configureStore({
   reducer: {
@@ -12,6 +14,7 @@ const store = configureStore({
   course: courseReducer,
     student: studentReducer,
     teacher: teacherReducer,
+    CourseAssign: EnrollmentSlice,
     user: userReducer
   }
 })

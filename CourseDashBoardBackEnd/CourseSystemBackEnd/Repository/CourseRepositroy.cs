@@ -29,7 +29,7 @@ public class CourseRepository : ICourseRepository
             return false;
         }
 
-        var course = await _schoolDB.Courses.FirstOrDefaultAsync(c => c.CourseID == courseId);
+        var course = await _schoolDB.Courses.Include(c => c.Students).ThenInclude(s => s.User).Include(c => c.Teacher).ThenInclude(t => t.User).FirstOrDefaultAsync(c => c.CourseID == courseId);
         if (course == null)
         {
             return false;
@@ -51,8 +51,8 @@ public class CourseRepository : ICourseRepository
     {
 #pragma warning disable CS8603 // Possible null reference return.
         return await _schoolDB
-            .Courses.Include(c => c.Teacher)
-            .Include(c => c.Students)
+            .Courses.Include(c => c.Teacher).ThenInclude(t => t.User)
+            .Include(c => c.Students).ThenInclude(s => s.User)
             .FirstOrDefaultAsync(c => c.CourseID == courseId);
 #pragma warning restore CS8603 // Possible null reference return.
     }

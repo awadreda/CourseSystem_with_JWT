@@ -12,6 +12,7 @@ import {
 import Grid from '@mui/material/GridLegacy'
 import { useAppDispatch, useAppSelector } from '../../../Redux/hooks'
 import { GetAllCoursesSlice } from '../../../Redux/slices/CoursesSlice'
+import { Link } from 'react-router'
 
 // --- Types ---
 export interface StudentReadDTO {
@@ -208,7 +209,7 @@ interface Props {
 const CourseListTOAssgin
 : React.FC<Props> = () => {
   function onAssign(courseID: string): void {
-    throw new Error('Function not implemented.')
+    console.log(courseID)
   }
 
   const CourseApi = useAppSelector(state => state.course)
@@ -283,7 +284,9 @@ useEffect(() => {
                   }}
                   onClick={() => onAssign(course.courseID)}
                 >
+                  <Link style={{width: '100%', textDecoration: 'none', color: '#fff'}} to={`${course.courseID}`}>
                   Assign to Course
+                  </Link>
                 </Button>
               </CardActions>
             </Card>

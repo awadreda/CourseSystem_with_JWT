@@ -148,6 +148,7 @@ export const CourseSlice = createSlice({
       .addCase(GetCoursebyId.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.course = action.payload;
+          state.CurrentCourse = action.payload
       })    
       .addCase(GetCoursebyId.rejected, (state, action) => {
         state.status = 'failed';

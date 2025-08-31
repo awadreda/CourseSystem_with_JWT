@@ -13,7 +13,7 @@ public static class CourseMapper
             Title = course.Title,
             Description = course.Description,
             Credits = course.Credits,
-            Students = course.Students.Select(s => s.ToStudentReadDTO()).ToList(),
+            Students = course.Students != null || course.Students?.Count > 0 ? course.Students.Select(s => s.ToStudentReadDTO()).ToList() : [],
             TeacherID = (Guid)course.TeacherID,
 
           Teacher = course.Teacher != null ? course.Teacher.ToTeacherReadDTO() : null
